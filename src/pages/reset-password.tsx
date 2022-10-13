@@ -63,7 +63,7 @@ const ResetPassword = () => {
           console.log("Admin Reset!");
         }
         else {
-          axios.post(`http://localhost:4002/users/reset/${token}`, obj)
+          axios.post(`https://myutilityapi.herokuapp.com/reset/${token}`, obj)
           .then(response => {
             const res = response.data;
             setResetLoading(false);
