@@ -4,7 +4,6 @@ import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Alert from '../components/ui/alert';
-import Input from '../components/ui/forms/input';
 import PasswordInput from '../components/ui/forms/password-input';
 import Button from '../components/ui/button';
 import axios from 'axios';
@@ -59,10 +58,11 @@ const ResetPassword = () => {
           password: password
         };
 
-        if(permissionCode != "0") {
+        if(permissionCode !== "0") {
           axios.post(`https://myutilityapi.herokuapp.com/admins/reset/${token}`, obj)
           .then(response => {
             const res = response.data;
+            console.log(res);
             setResetLoading(false);
             setSuccessMsg("Your password was successfully reset. You can go ahead to login with your new password")
 
@@ -77,6 +77,7 @@ const ResetPassword = () => {
           axios.post(`https://myutilityapi.herokuapp.com/users/reset/${token}`, obj)
           .then(response => {
             const res = response.data;
+            console.log(res);
             setResetLoading(false);
             setSuccessMsg("Your password was successfully reset. You can go ahead to login with your new password")
 
@@ -132,7 +133,7 @@ const ResetPassword = () => {
                   onClose={() => setSuccessMsg("")}
                 />
               ) : null}
-              {successMsg == '' ? (
+              {successMsg === '' ? (
                 <>
                   <PasswordInput
                     label="Password"

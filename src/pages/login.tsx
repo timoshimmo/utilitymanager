@@ -6,6 +6,7 @@ import Alert from '../components/ui/alert';
 import Input from '../components/ui/forms/input';
 import PasswordInput from '../components/ui/forms/password-input';
 import Button from '../components/ui/button';
+import axios from 'axios';
 
 type FormValues = {
   username: string;
@@ -55,6 +56,7 @@ const Login = () => {
       axios.post(`https://myutilityapi.herokuapp.com/admins/login`, obj)
       .then(response => {
         const res = response.data;
+        console.log(res);
         setLoginLoading(false);
 
       })

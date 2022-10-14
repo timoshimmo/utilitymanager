@@ -53,6 +53,7 @@ const ForgotPassword = () => {
       axios.post(`https://myutilityapi.herokuapp.com/admins/forgot`, obj)
       .then(response => {
         const res = response.data;
+        console.log(res);
         setForgotLoading(false);
         setSuccessMsg("Reset link has been sent to your email. Click on the link to continue the process")
 
@@ -101,7 +102,7 @@ const ForgotPassword = () => {
                   />
                 ) : null}
 
-                {successMsg == '' ? (
+                {successMsg === '' ? (
                   <>
                     <Input
                       label="Email"
