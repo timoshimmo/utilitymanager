@@ -42,9 +42,29 @@ const Login = () => {
   });
 
   function onSubmit({ username, password }: FormValues) {
-      console.log("username: " + username + " " + "Password: " + password);
-      setErrorMsg("Invalid credentials!");
+
+    if(!loginLoading) {
+
       setLoginLoading(true);
+
+      const obj = {
+        username: username,
+        password: password
+      };
+
+      axios.post(`https://myutilityapi.herokuapp.com/admins/login`, obj)
+      .then(response => {
+        const res = response.data;
+        setLoginLoading(false);
+
+      })
+      .catch(error => {
+        setLoginLoading(false);
+        const resError = error.response ? error.response.data.message : "Something went wrong please try again";
+        setErrorMsg(resError);
+      })
+
+    }
   }
 
   return (
@@ -94,8 +114,13 @@ const Login = () => {
                 >
                   {loginLoading ? "Loading..." : "LOGIN"}
                 </Button>
-
             </form>
+            <div className="w-full flex mt-5 mb-20 justify-center">
+              <span className="text-xs text-[#888888] mr-2">Don't have an admin account?</span>
+              <div className="flex">
+                <a href="/login" className="text-xs text-accent">Register</a>
+              </div>
+            </div>
             <div className="w-full flex mt-8 justify-center">
               <div className="flex">
                 <a href="/register-admin" className="text-xs text-accent">Privacy Policy </a>

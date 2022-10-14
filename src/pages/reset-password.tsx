@@ -60,10 +60,21 @@ const ResetPassword = () => {
         };
 
         if(permissionCode != "0") {
-          console.log("Admin Reset!");
+          axios.post(`https://myutilityapi.herokuapp.com/admins/reset/${token}`, obj)
+          .then(response => {
+            const res = response.data;
+            setResetLoading(false);
+            setSuccessMsg("Your password was successfully reset. You can go ahead to login with your new password")
+
+          })
+          .catch(error => {
+            setResetLoading(false);
+            const resError = error.response ? error.response.data.message : "Something went wrong please try again";
+            setErrorMsg(resError);
+          })
         }
         else {
-          axios.post(`https://myutilityapi.herokuapp.com/reset/${token}`, obj)
+          axios.post(`https://myutilityapi.herokuapp.com/users/reset/${token}`, obj)
           .then(response => {
             const res = response.data;
             setResetLoading(false);
@@ -121,7 +132,7 @@ const ResetPassword = () => {
                   onClose={() => setSuccessMsg("")}
                 />
               ) : null}
-              {errorMsg == '' && successMsg == '' ? (
+              {successMsg == '' ? (
                 <>
                   <PasswordInput
                     label="Password"
@@ -143,7 +154,7 @@ const ResetPassword = () => {
                     loading={resetLoading}
                     disabled={resetLoading}
                   >
-                    {resetLoading ? "Loading..." : "Reset"}
+                    {resetLoading ? "Loading..." : "RESET"}
                   </Button>
                 </>
               ) : null}

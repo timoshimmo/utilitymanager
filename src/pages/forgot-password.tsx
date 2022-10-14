@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Alert from '../components/ui/alert';
 import Input from '../components/ui/forms/input';
 import Button from '../components/ui/button';
+import axios from 'axios';
 
 type FormValues = {
   email: string;
@@ -27,6 +28,7 @@ const ForgotPassword = () => {
   //let [serverError, setServerError] = useState<string | null>(null);
   const [forgotLoading, setForgotLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
 
   const {
     register,
@@ -39,9 +41,29 @@ const ForgotPassword = () => {
   });
 
   function onSubmit({ email }: FormValues) {
-      console.log("email: " + email);
-      setErrorMsg("Invalid credentials!");
+
+    if(!forgotLoading) {
+
       setForgotLoading(true);
+
+      const obj = {
+        email: email
+      };
+
+      axios.post(`https://myutilityapi.herokuapp.com/admins/forgot`, obj)
+      .then(response => {
+        const res = response.data;
+        setForgotLoading(false);
+        setSuccessMsg("Reset link has been sent to your email. Click on the link to continue the process")
+
+      })
+      .catch(error => {
+        setForgotLoading(false);
+        const resError = error.response ? error.response.data.message : "Something went wrong please try again";
+        setErrorMsg(resError);
+      })
+
+    }
   }
 
   return (
@@ -53,7 +75,11 @@ const ForgotPassword = () => {
             height="80"
             width="80"
           />
-          <span className="mt-3 text-[#888888] text-sm w-80 text-center">Enter your email to renew your password</span>
+          {successMsg ?
+            (<span className="mt-3 text-accent font-semibold w-80 text-center">Reset link sent!</span>)
+            :
+            (<span className="mt-3 text-[#888888] text-sm w-80 text-center">Enter your email to renew your password</span>)
+          }
           <div className="mt-8 w-full px-4">
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 {errorMsg ? (
@@ -65,23 +91,36 @@ const ForgotPassword = () => {
                     onClose={() => setErrorMsg("")}
                   />
                 ) : null}
-                <Input
-                  label="Email"
-                  {...register('email')}
-                  type="email"
-                  variant="outline"
-                  className="mb-5"
-                  placeholder="Enter email"
-                  error={errors.email?.message!}
-                />
-                <Button
-                  className="h-11 w-full mt-8"
-                  loading={forgotLoading}
-                  disabled={forgotLoading}
-                >
-                  {forgotLoading ? "Loading..." : "SEND"}
-                </Button>
 
+                {successMsg ? (
+                  <Alert
+                    message={successMsg}
+                    variant="success"
+                    className="my-4"
+                    onClose={() => setSuccessMsg("")}
+                  />
+                ) : null}
+
+                {successMsg == '' ? (
+                  <>
+                    <Input
+                      label="Email"
+                      {...register('email')}
+                      type="email"
+                      variant="outline"
+                      className="mb-5"
+                      placeholder="Enter email"
+                      error={errors.email?.message!}
+                    />
+                    <Button
+                      className="h-11 w-full mt-8"
+                      loading={forgotLoading}
+                      disabled={forgotLoading}
+                    >
+                      {forgotLoading ? "Loading..." : "SEND"}
+                    </Button>
+                  </>
+                ) : null}
             </form>
             <div className="w-full flex mt-5 mb-20 justify-center">
               <span className="text-xs text-[#888888] mr-2">Remember your password?</span>
