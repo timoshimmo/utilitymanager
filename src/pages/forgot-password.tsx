@@ -50,16 +50,17 @@ const ForgotPassword = () => {
         email: email
       };
 
-      axios.post(`https://myutilityapi.herokuapp.com/admins/forgot`, obj)
+      axios.post(`http://localhost:4002/admins/forgot`, obj)
       .then(response => {
         const res = response.data;
         console.log(res);
         setForgotLoading(false);
-        setSuccessMsg("Reset link has been sent to your email. Click on the link to continue the process")
+        setSuccessMsg("Reset link has been sent to your email. Click on the link to continue the process");
 
       })
       .catch(error => {
         setForgotLoading(false);
+        console.log(JSON.stringify(error));
         const resError = error.response ? error.response.data.message : "Something went wrong please try again";
         setErrorMsg(resError);
       })
@@ -68,8 +69,8 @@ const ForgotPassword = () => {
   }
 
   return (
-      <div className="flex justify-center items-center w-full h-screen">
-        <div className="flex items-center flex-col xs:w-5/6 w-2/5 bg-[#FFFFFF] rounded pt-6 px-6 pb-10 border border-gray-100">
+      <div className="flex justify-center items-center w-full h-screen bg-[#F5F5F5]">
+        <div className="flex items-center flex-col xs:w-5/6 w-2/5 bg-[#FFFFFF] shadow rounded pt-6 px-6 pb-10 border border-gray-100">
           <img
             alt="Logo"
             src="/images/myutility_placeholder_logo.png"

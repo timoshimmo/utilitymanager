@@ -7,7 +7,7 @@ interface PrivateRouteProps {
     path?: string;
 }
 
-const PrivateRoute = (props: PrivateRouteProps) => {
+const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
   const { layout: Layout, component: Component, ...rest } = props;
 
   return (

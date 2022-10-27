@@ -9,7 +9,8 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   type?: string;
   shadow?: boolean;
-  variant?: 'normal' | 'solid' | 'outline' | 'line';
+  compulsory?: boolean;
+  variant?: 'normal' | 'solid' | 'outline' | 'line' | 'box' | 'search';
   dimension?: 'small' | 'medium' | 'big';
 }
 
@@ -20,6 +21,8 @@ const variantClasses = {
     'bg-gray-100 border border-border-100 rounded focus:bg-light focus:border-accent',
   outline: 'border border-border-base rounded focus:border-accent',
   line: 'ltr:pl-0 rtl:pr-0 border-b border-border-base rounded-none focus:border-accent',
+  box: 'bg-gray-100 border border-border-100 focus:bg-light focus:border-accent',
+  search: 'bg-gray-100 border border-border-100 rounded-l-sm rounded-r-0 focus:bg-light focus:border-accent'
 };
 
 const sizeClasses = {
@@ -40,6 +43,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
       variant = 'normal',
       dimension = 'medium',
       shadow = false,
+      compulsory = false,
       disabled = false,
       type = 'text',
       inputClassName,
@@ -54,7 +58,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
             htmlFor={name}
             className="block mb-3 text-sm font-semibold leading-none text-accent"
           >
-            {label}
+            {label}{compulsory && <span className="text-sm text-[#EA0E0E]">*</span>}
           </label>
         )}
         <input

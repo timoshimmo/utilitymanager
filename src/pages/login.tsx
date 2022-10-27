@@ -7,6 +7,7 @@ import Input from '../components/ui/forms/input';
 import PasswordInput from '../components/ui/forms/password-input';
 import Button from '../components/ui/button';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 type FormValues = {
   username: string;
@@ -27,6 +28,8 @@ const defaultValues = {
 
 
 const Login = () => {
+
+  const history = useHistory();
 
   //let [serverError, setServerError] = useState<string | null>(null);
   const [loginLoading, setLoginLoading] = useState(false);
@@ -53,33 +56,60 @@ const Login = () => {
         password: password
       };
 
-      axios.post(`https://myutilityapi.herokuapp.com/admins/login`, obj)
+      axios.post(`http://localhost:4002/admins/login`, obj)
       .then(response => {
         const res = response.data;
-        console.log(res);
+        //console.log("LOGIN: " + JSON.stringify(res.data));
         setLoginLoading(false);
+        localStorage.setItem('userFullName', res.data.fullName);
+        localStorage.setItem('discoId', res.data.discoId);
+        localStorage.setItem('token', res.data.token);
+        if(res.data.permissionCode) {
+        //  console.log("PERMISSION CODE:" + res.data.permissionCode);
+          localStorage.setItem('permissionCode', res.data.permissionCode);
+          if(res.data.permissionCode !== "1") {
+            history.push('/dashboard');
+          }
+          else {
+            history.push('/home');
+          }
+        }
+
 
       })
       .catch(error => {
         setLoginLoading(false);
         const resError = error.response ? error.response.data.message : "Something went wrong please try again";
         setErrorMsg(resError);
+        console.log(error.response.status);
+        console.log(error.response.data.error);
       })
 
     }
   }
 
+  /*
+  <div className="w-full lg:flex mt-5 mb-20 lg:justify-center">
+    <div className="flex lg:mr-1 mb-1">
+      <span className="text-xs text-[#888888]">Don't have an admin account?</span>
+    </div>
+    <div className="flex">
+      <a href="/register-admin" className="text-xs text-accent">Register</a>
+    </div>
+  </div>
+  */
+
   return (
-      <div className="flex justify-center items-center w-full h-screen">
-        <div className="flex items-center flex-col xs:w-5/6 w-2/5 bg-[#FFFFFF] rounded pt-6 px-6 pb-10 border border-gray-100">
+      <div className="flex justify-center items-center w-full h-full py-10">
+        <div className="flex items-center flex-col lg:w-2/5 w-5/6 bg-[#FFFFFF] shadow rounded pt-6 px-6 pb-10 border border-gray-100">
           <img
             alt="Logo"
             src="/images/myutility_placeholder_logo.png"
             height="80"
             width="80"
           />
-          <span className="mt-3 text-[#888888] text-sm w-80 text-center">Login to continue, we have made facility management experience easy</span>
-          <div className="mt-8 w-full px-4">
+          <span className="mt-3 text-[#888888] lg:text-sm text-xs text-center lg:w-80">Login to continue, we have made facility management experience easy</span>
+          <div className="mt-8 w-full lg:px-4">
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 {errorMsg ? (
                   <Alert
@@ -117,15 +147,9 @@ const Login = () => {
                   {loginLoading ? "Loading..." : "LOGIN"}
                 </Button>
             </form>
-            <div className="w-full flex mt-5 mb-20 justify-center">
-              <span className="text-xs text-[#888888] mr-2">Don't have an admin account?</span>
-              <div className="flex">
-                <a href="/login" className="text-xs text-accent">Register</a>
-              </div>
-            </div>
             <div className="w-full flex mt-8 justify-center">
               <div className="flex">
-                <a href="/register-admin" className="text-xs text-accent">Privacy Policy </a>
+                <a href="#" className="text-xs text-accent">Privacy Policy </a>
                 <a href="#" className="text-xs text-accent ml-2">Terms & Conditions</a>
               </div>
               <span className="text-xs text-[#888888] ml-2 mr-2"> | </span>

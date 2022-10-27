@@ -5,7 +5,7 @@ function Minimal({ children }: InferProps<typeof Minimal.propTypes>) {
 
   return (
     <div className="min-h-full w-full">
-      <main className="min-h-full h-full w-full bg-[#F5F5F5]">{children}</main>
+      <main className="min-h-screen w-full bg-[#F5F5F5]">{children}</main>
     </div>
   );
 };

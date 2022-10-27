@@ -64,7 +64,7 @@ const ResetPassword = () => {
             const res = response.data;
             console.log(res);
             setResetLoading(false);
-            setSuccessMsg("Your password was successfully reset. You can go ahead to login with your new password")
+            setSuccessMsg("Your password was successfully reset. You can go ahead to login with your new password");
 
           })
           .catch(error => {
@@ -99,7 +99,7 @@ const ResetPassword = () => {
   return (
 
     <div className="flex justify-center items-center w-full h-screen">
-      <div className="flex items-center flex-col xs:w-5/6 w-2/5 bg-[#FFFFFF] rounded-sm p-6">
+      <div className="flex items-center flex-col xs:w-5/6 w-2/5 bg-[#FFFFFF] shadow rounded-sm p-6">
         <img
           alt="Logo"
           src="/images/myutility_placeholder_logo.png"
