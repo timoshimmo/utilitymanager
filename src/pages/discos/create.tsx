@@ -53,7 +53,6 @@ const RegisterDiscos = () => {
   const {
     register,
     handleSubmit,
-
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues,

@@ -10,9 +10,9 @@ interface Props {
 }
 
 const data = [
-  { value: 'transformer', label: 'Transformer' },
-  { value: 'meter', label: 'Meter' },
-  { value: 'pole', label: 'Pole' },
+  { value: 'Transformer', label: 'Transformer' },
+  { value: 'Meter', label: 'Meter' },
+  { value: 'Pole', label: 'Pole' },
 ];
 
 const AssetTypeSelect = ({ control, error, compulsory = false }: Props) => {
@@ -21,7 +21,7 @@ const AssetTypeSelect = ({ control, error, compulsory = false }: Props) => {
     <div className="mb-5">
       <Label>Asset Type{compulsory && <span className="text-sm text-[#EA0E0E]">*</span>}</Label>
       <SelectInput
-        name="assettype"
+        name="assetType"
         control={control}
         getOptionLabel={(option: any) => option.label}
         getOptionValue={(option: any) => option.value}

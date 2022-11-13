@@ -1,6 +1,8 @@
 import React from 'react';
 import { Switch, Redirect } from 'react-router-dom';
 
+import { ROUTES } from './route-links';
+
 import PrivateRoute from './private-route';
 import Minimal from '../layouts/minimal';
 import Main from '../layouts/main';
@@ -21,6 +23,12 @@ import CreateUsers from '../pages/users/create';
 import GetUsers from '../pages/users';
 import GetAssets from '../pages/assets';
 import CreateAssets from '../pages/assets/create';
+import GetTeamGroups from '../pages/team-group';
+import CreateTeamGroup from '../pages/team-group/create';
+import GetTeamMembers from '../pages/team-member';
+import CreateTeamMember from '../pages/team-member/create';
+import GetTickets from '../pages/support';
+import Messages from '../pages/support/messages';
 
  const RoutesComponent = () => {
 
@@ -121,6 +129,42 @@ import CreateAssets from '../pages/assets/create';
                layout={Main}
                path="/create-users"
              />
+
+         <PrivateRoute
+            component={GetTeamGroups}
+            layout={Main}
+            path="/team-groups"
+          />
+
+         <PrivateRoute
+            component={CreateTeamGroup}
+            layout={Main}
+            path="/create-team-group"
+          />
+
+        <PrivateRoute
+           component={GetTeamMembers}
+           layout={Main}
+           path="/team-members"
+         />
+
+        <PrivateRoute
+           component={CreateTeamMember}
+           layout={Main}
+           path="/create-team-member"
+         />
+
+       <PrivateRoute
+          component={GetTickets}
+          layout={Main}
+          path={ROUTES.TICKETS}
+        />
+
+       <PrivateRoute
+          component={Messages}
+          layout={Main}
+          path={ROUTES.TICKET_MESSAGES}
+        />
 
       <Redirect  to="/login" />
     </Switch>

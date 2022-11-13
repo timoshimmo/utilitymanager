@@ -9,7 +9,8 @@ import Button from '../../components/ui/button';
 import { BackArrowIcon } from '../../components/icons/back-arrow';
 import AssetTypeSelect from "../../components/ui/forms/asset-type-select";
 import AssetStatusSelect from "../../components/ui/forms/asset-status-select";
-import axios from 'axios';
+//import axios from 'axios';
+import SERVICES from '../../util/webservices';
 
 type FormValues = {
   assetType: any;
@@ -25,10 +26,10 @@ const superadminSchema = yup.object().shape({
     .string()
     .required('description is required'),
   status: yup
-    .string()
+    .object()
     .required('Status is required'),
   location: yup.string().required('Mobile No. is required!'),
-  value: yup.object().required('Permission type must be selected'),
+  value: yup.string().required('Value is required!'),
 });
 
 const defaultValues = {
@@ -59,12 +60,12 @@ const CreateAssets = () => {
   });
 
   function onSubmit({ assetType, description, status, location, value }: FormValues) {
-      setSuccessMsg("Success");
+      /*setSuccessMsg("Success");
       setErrorMsg("Error");
       setStatusLoading(true);
       console.log("Print: " + assetType + description + status + location + value);
-      console.log("STATUS: " + successMsg + errorMsg);
-  /*  if(!statusLoading) {
+      console.log("STATUS: " + successMsg + errorMsg);*/
+    if(!statusLoading) {
 
       setStatusLoading(true);
 
@@ -77,22 +78,23 @@ const CreateAssets = () => {
       }
 
       const obj = {
-        fullName: fullName,
-        email: email,
-        mobileNo: mobileNo,
+        type: assetType.value,
+        description: description,
+        status: status.value,
+        location: location,
+        value: value,
         discoId: mDiscoID,
-        permissionCode: permission.value
       };
 
-      console.log(JSON.stringify(obj));
-      setStatusLoading(false);
+      //console.log(JSON.stringify(obj));
+      //setStatusLoading(false);
 
-      axios.post(`http://localhost:4002/admins/register`, obj)
+      SERVICES.post(`assets/create`, obj)
       .then(response => {
         const res = response.data;
         console.log(res);
         setStatusLoading(false);
-        setSuccessMsg("Admin login username and password have been sent to the registered email. Use those credentials to access the dashboard");
+        setSuccessMsg("Asset Created Successfully!");
 
       })
       .catch(error => {
@@ -101,7 +103,7 @@ const CreateAssets = () => {
         setErrorMsg(resError);
       });
 
-    }*/
+    }
   }
 
   return (

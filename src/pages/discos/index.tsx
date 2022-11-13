@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FilterIcon } from '../../components/icons/filter-icon';
 import { SearchWhiteIcon } from '../../components/icons/search-white-icon';
-import DiscosList from "../../components/discos/disco-list";
+import DiscosTable from "../../components/discos/disco-table";
 import SERVICES from '../../util/webservices';
 import { ROUTES } from '../../lib/route-links';
 //import axios from 'axios';
@@ -115,7 +115,7 @@ const GetDiscos = () => {
             </Button>
           </div>
           <div className="w-full mt-10">
-            <DiscosList
+            <DiscosTable
               discos={allDiscos}
             />
           </div>

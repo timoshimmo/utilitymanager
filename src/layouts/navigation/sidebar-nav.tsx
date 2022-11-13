@@ -34,7 +34,7 @@ const SidebarNav: React.FC<SidebarNavProps & RouteComponentProps> = ({menus}) =>
   return (
     <div className="w-full relative grow">
       <p className="text-xs text-[#FFFFFF] opacity-60 mb-4">MAIN</p>
-      <div className="w-full overflow-hidden">
+      <div className="w-full overflow-y-auto h-[75%] scrollbar-hide">
         <ul>
           {menus.map((item: any, idx:number) => (
             <li className="py-1" key={idx}>
@@ -53,8 +53,8 @@ const SidebarNav: React.FC<SidebarNavProps & RouteComponentProps> = ({menus}) =>
           ))}
         </ul>
       </div>
-      <Button
-        className="bg-accent-hover text-xs rounded-none w-full absolute bottom-5 justify-start"
+      <button
+        className="bg-accent-hover text-xs p-3 rounded-none w-full absolute bottom-5 inline-flex items-center shrink-0 font-semibold leading-none outline-none transition duration-300 ease-in-out focus:outline-none focus:shadow focus:ring-1 focus:ring-accent-700"
         onClick={logOut}
       >
         <Avatar
@@ -66,7 +66,7 @@ const SidebarNav: React.FC<SidebarNavProps & RouteComponentProps> = ({menus}) =>
           <p className="text-xs text-light font-semibold">{fullName}</p>
           <p className="text-[11px] text-light font-normal">Log Out</p>
         </div>
-      </Button>
+      </button>
     </div>
   );
 };

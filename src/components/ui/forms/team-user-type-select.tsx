@@ -10,17 +10,19 @@ interface Props {
 }
 
 const data = [
-  { value: 1, label: 'Active' },
-  { value: 0, label: 'In active' },
+  { value: 'Engineer', label: 'Engineer' },
+  { value: 'Electrician', label: 'Electrician' },
+  { value: 'Welder', label: 'Welder' },
+  { value: 'Driver', label: 'Driver' }
 ];
 
-const AssetStatusSelect = ({ control, error, compulsory }: Props) => {
+const TeamUserTypeSelect = ({ control, error, compulsory = false }: Props) => {
 
   return (
     <div className="mb-5">
-      <Label>Asset Status{compulsory && <span className="text-sm text-[#EA0E0E]">*</span>}</Label>
+      <Label>User Type{compulsory && <span className="text-sm text-[#EA0E0E]">*</span>}</Label>
       <SelectInput
-        name="status"
+        name="userType"
         control={control}
         getOptionLabel={(option: any) => option.label}
         getOptionValue={(option: any) => option.value}
@@ -31,4 +33,4 @@ const AssetStatusSelect = ({ control, error, compulsory }: Props) => {
   );
 };
 
-export default AssetStatusSelect;
+export default TeamUserTypeSelect;

@@ -4,63 +4,55 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Alert from '../../components/ui/alert';
 import Input from '../../components/ui/forms/input';
-import Select from 'react-select';
 import Button from '../../components/ui/button';
 import { BackArrowIcon } from '../../components/icons/back-arrow';
-import PermissionTypeSelect from "../../components/ui/forms/permission-type-select";
 //import axios from 'axios';
 import SERVICES from '../../util/webservices';
 
 type FormValues = {
-  fullName: string;
-  email: string;
-  mobileNo: string;
-  permission: any;
+  name: string;
+  branch: string;
+  branchAddress: string;
 }
 
-const superadminSchema = yup.object().shape({
-  fullName: yup
+const teamGroupSchema = yup.object().shape({
+  name: yup
     .string()
-    .required('Fullname is required'),
-  email: yup
-    .string()
-    .email("Invalid email format")
-    .required('Email is required'),
-  mobileNo: yup.string().required('Mobile No. is required!'),
-  permission: yup.object().required('Permission type must be selected'),
+    .required('Name is required'),
+  branch: yup.string().required('Branch is required!'),
+  branchAddress: yup.string().required('Address is required!'),
 });
 
 const defaultValues = {
-  fullName: "",
-  email: "",
-  mobileNo: "",
-  permission: null,
+  name: "",
+  branch: "",
+  branchAddress: "",
 };
 
 
-const RegisterManagers = () => {
+const CreateTeamGroup = () => {
 
   //let [serverError, setServerError] = useState<string | null>(null);
-  const [managerLoading, setManagerLoading] = useState(false);
+  const [teamGroupLoading, setTeamGroupLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
   const {
     register,
     handleSubmit,
-    control,
-    setError,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues,
-    resolver: yupResolver(superadminSchema),
+    resolver: yupResolver(teamGroupSchema),
   });
 
-  function onSubmit({ fullName, email, mobileNo, permission }: FormValues) {
+  function onSubmit({ name, branch, branchAddress }: FormValues) {
 
-    if(!managerLoading) {
+    console.log("NAME: " + branchAddress);
 
-      setManagerLoading(true);
+    if(!teamGroupLoading) {
+
+      setTeamGroupLoading(true);
 
       let mDiscoID = '';
       if (typeof localStorage !== 'undefined') {
@@ -71,26 +63,24 @@ const RegisterManagers = () => {
       }
 
       const obj = {
-        fullName: fullName,
-        email: email,
-        mobileNo: mobileNo,
-        discoId: mDiscoID,
-        permissionCode: permission.value
+        name: name,
+        branch: branch,
+        branchAddress: branchAddress,
       };
 
       //console.log(JSON.stringify(obj));
-      //setManagerLoading(false);
+      //setTeamGroupLoading(false);
 
-      SERVICES.post(`admins/register`, obj)
+      SERVICES.post(`teamgroup/create`, obj)
       .then(response => {
         const res = response.data;
-        console.log(res);
-        setManagerLoading(false);
-        setSuccessMsg("Admin login username and password have been sent to the registered email. Use those credentials to access the dashboard");
+      //  console.log(res);
+        setTeamGroupLoading(false);
+        setSuccessMsg("Team Group Created Successfully!");
 
       })
       .catch(error => {
-        setManagerLoading(false);
+        setTeamGroupLoading(false);
         const resError = error.response ? error.response.data.message : "Something went wrong please try again";
         setErrorMsg(resError);
       });
@@ -104,7 +94,7 @@ const RegisterManagers = () => {
         <button className="relative h-7 w-7 flex justify-center items-center rounded-full hover:bg-gray-200 focus:bg-gray-200 mr-6">
           <BackArrowIcon className="w-6 h-6" />
         </button>
-        <span className="text-body text-[28px] font-bold">Create Manager</span>
+        <span className="text-body text-[28px] font-bold">Create Team Group</span>
       </div>
       <div className="mt-8 w-full px-4">
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -129,47 +119,46 @@ const RegisterManagers = () => {
 
               {successMsg === '' ? (
                 <>
+
                   <Input
-                    label="Fullname"
-                    {...register('fullName')}
+                    label="Name"
+                    {...register('name')}
                     type="text"
                     variant="outline"
+                    compulsory={true}
                     className="mb-5"
-                    placeholder="Enter your full name"
-                    error={errors.fullName?.message!}
-                  />
-
-                  <PermissionTypeSelect
-                    control={control}
-                    error={(errors?.permission as any)?.message}
+                    placeholder="Enter team group name"
+                    error={errors.name?.message!}
                   />
 
                   <Input
-                    label="Email"
-                    {...register('email')}
-                    type="email"
-                    variant="outline"
-                    className="mb-5"
-                    placeholder="Enter a valid email"
-                    error={errors.email?.message!}
-                  />
-
-                  <Input
-                    label="Mobile number"
-                    {...register('mobileNo')}
+                    label="Branch"
+                    {...register('branch')}
                     type="text"
                     variant="outline"
+                    compulsory={true}
                     className="mb-5"
-                    placeholder="Enter mobile number"
-                    error={errors.mobileNo?.message!}
+                    placeholder="Enter DISCO branch"
+                    error={errors.branch?.message!}
+                  />
+
+                  <Input
+                    label="Address"
+                    {...register('branchAddress')}
+                    type="text"
+                    variant="outline"
+                    compulsory={true}
+                    className="mb-5"
+                    placeholder="Enter Branch Address"
+                    error={errors.branchAddress?.message!}
                   />
 
                   <Button
                     className="h-11 w-full mt-8"
-                    loading={managerLoading}
-                    disabled={managerLoading}
+                    loading={teamGroupLoading}
+                    disabled={teamGroupLoading}
                   >
-                    {managerLoading ? "Loading..." : "SAVE"}
+                    {teamGroupLoading ? "Loading..." : "SAVE"}
                   </Button>
                 </>
               ) : null}
@@ -181,4 +170,4 @@ const RegisterManagers = () => {
 
 }
 
-export default RegisterManagers;
+export default CreateTeamGroup;

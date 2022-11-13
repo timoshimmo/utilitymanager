@@ -1,21 +1,23 @@
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { MenuDotsIcon } from '../../components/icons/menu-dots';
 import {
-  DiscosType,
+  AssetType,
 } from "../../ts-types/generated";
 
 export type IProps = {
-  discos?: any;
+  assets?: any;
+  loading?: boolean;
 };
 
 
-const DiscosList = ({ discos }: IProps) => {
+const AssetsTable = ({ assets, loading }: IProps) => {
 
   const customStyles = {
     rows: {
         style: {
             color: '#131313',
-            fontSize: 13
+            fontSize: 13,
+            textTransform: 'capitalize',
         },
     },
     headCells: {
@@ -33,32 +35,41 @@ const DiscosList = ({ discos }: IProps) => {
     },
 };
 
-  let columns: TableColumn<DiscosType>[] = [
+  let columns: TableColumn<AssetType>[] = [
     {
-      name: "NAME",
-      id: "name",
-      selector: row => row.name,
+      name: "TYPE",
+      id: "type",
+      selector: row => row.type,
       sortable: true,
     },
     {
-      name: "CONTACT",
-      id: "contact",
-      width: "150px",
-      selector: row => row.contact,
+      name: "DESCRIPTION",
+      id: "description",
+      selector: row => row.description,
+    },
+    {
+      name: "LOCATION",
+      id: "location",
+      selector: row => row.location,
+    },
+    {
+      name: "VALUE",
+      id: "value",
+      selector: row => row.value,
       sortable: true,
     },
     {
-      name: "EMAIL",
-      id: "email",
-      selector: row => row.email,
-      sortable: true,
-    },
-    {
-      name: "ADDRESS",
-      id: "hqAddress",
-      width: "300px",
-      selector: row => row.hqAddress,
-      sortable: true,
+      name: "STATUS",
+      id: "status",
+      selector: row => row.status,
+      cell: (row) => {
+          if (row?.status > 0) {
+            return <span className="whitespace-nowrap text-[#27B235]">Active</span>
+          }
+          else{
+            return <span className="whitespace-nowrap text-[#EA0E0E]">In-Active</span>
+          }
+      },
     },
     {
       name: "",
@@ -77,8 +88,9 @@ const DiscosList = ({ discos }: IProps) => {
       <DataTable
         responsive={true}
         columns={columns}
-        data={discos}
+        data={assets}
         defaultSortFieldId={1}
+        progressPending={loading}
         pagination
         customStyles={customStyles}
       />
@@ -88,4 +100,4 @@ const DiscosList = ({ discos }: IProps) => {
 
 }
 
-export default DiscosList;
+export default AssetsTable;

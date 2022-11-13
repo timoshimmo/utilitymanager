@@ -7,8 +7,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FilterIcon } from '../../components/icons/filter-icon';
 import { SearchWhiteIcon } from '../../components/icons/search-white-icon';
-import ManagersTable from "../../components/managers/managers-table";
-//import axios from 'axios';
+import TeamMembersTable from "../../components/team-members/team-members-table";
 import SERVICES from '../../util/webservices';
 import { ROUTES } from '../../lib/route-links';
 
@@ -27,33 +26,30 @@ const defaultValues = {
   qdisco: "",
 };
 
-const GetManagers = () => {
+const GetTeamMembers = () => {
 
   const history = useHistory();
-  const [managers, setManagers] = useState([]);
-  
+  const [allMembers, setAllMembers] = useState([]);
 
   useEffect(() => {
-    retrieveManagers();
+    retrieveTeamMembers();
  }, []);
 
- const retrieveManagers = () => {
-   SERVICES.get(`admins/get/managers`)
-   .then(response => {
-     const res = response.data.data;
-     console.log(res);
-     setManagers(res);
-
-   })
-   .catch(error => {
-     const resError = error.response ? error.response.data.message : "Something went wrong please try again";
-     console.log(resError);
-   })
-
- }
-
   const navNew = () => {
-      history.push(ROUTES.REGISTER_MANAGERS);
+      history.push(ROUTES.CREATE_TEAM_MEMBERS);
+  }
+
+  const retrieveTeamMembers = () => {
+    SERVICES.get(`team-member/get`)
+    .then(response => {
+        const res = response.data.data;
+        setAllMembers(res);
+    })
+    .catch(error => {
+        const resError = error.response ? error.response.data.message : "Something went wrong please try again";
+        console.log(resError);
+    })
+
   }
 
   function onSubmit({ qdisco }: FormValues) {
@@ -75,7 +71,7 @@ const GetManagers = () => {
       <div className="w-full h-full py-10 px-8">
         <div className="flex items-center flex-col bg-[#FFFFFF] shadow rounded pt-6 pb-10">
           <div className="w-full flex justify-between items-center px-6">
-            <span className="text-lg text-body font-semibold">Managers Table</span>
+            <span className="text-lg text-body font-semibold">Team Members Table</span>
               <div className="flex grow justify-end items-center px-20">
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                   <div className="flex">
@@ -118,8 +114,8 @@ const GetManagers = () => {
             </div>
 
             <div className="w-full mt-10">
-              <ManagersTable
-                managers={managers}
+              <TeamMembersTable
+                members={allMembers}
               />
             </div>
           </div>
@@ -127,4 +123,4 @@ const GetManagers = () => {
   );
 };
 
-export default GetManagers;
+export default GetTeamMembers;

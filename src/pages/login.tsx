@@ -38,7 +38,6 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues,
@@ -59,7 +58,7 @@ const Login = () => {
       axios.post(`http://localhost:4002/admins/login`, obj)
       .then(response => {
         const res = response.data;
-        //console.log("LOGIN: " + JSON.stringify(res.data));
+        console.log("LOGIN: " + JSON.stringify(res.data));
         setLoginLoading(false);
         localStorage.setItem('userFullName', res.data.fullName);
         localStorage.setItem('discoId', res.data.discoId);
@@ -68,9 +67,11 @@ const Login = () => {
         //  console.log("PERMISSION CODE:" + res.data.permissionCode);
           localStorage.setItem('permissionCode', res.data.permissionCode);
           if(res.data.permissionCode !== "1") {
+            localStorage.setItem('globalTitle', "Dashboard");
             history.push('/dashboard');
           }
           else {
+            localStorage.setItem('globalTitle', "Home");
             history.push('/home');
           }
         }

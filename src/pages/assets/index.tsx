@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '../../components/ui/button';
 import { useHistory } from 'react-router-dom';
 import Input from '../../components/ui/forms/input';
@@ -7,9 +7,19 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FilterIcon } from '../../components/icons/filter-icon';
 import { SearchWhiteIcon } from '../../components/icons/search-white-icon';
+import AssetsTable from "../../components/assets/assets-table";
+import Card from '../../components/ui/cards/card';
+import { CardUpArrowIcon } from '../../components/icons/card-up-arrow';
+import Chart from 'react-apexcharts';
+import SERVICES from '../../util/webservices';
+import { ROUTES } from '../../lib/route-links';
 
 type FormValues = {
   qdisco: string;
+}
+
+type valueProps = {
+  revData: number;
 }
 
 const searchSchema = yup.object().shape({
@@ -23,12 +33,32 @@ const defaultValues = {
   qdisco: "",
 };
 
-const GetManagers = () => {
+const GetAssets = () => {
 
   const history = useHistory();
+  const [allAssets, setAllAssets] = useState([]);
+  const [pending, setPending] = useState(true);
+
+  useEffect(() => {
+    retrieveAssets();
+ }, []);
 
   const navNew = () => {
-      history.push('/create-asset');
+      history.push(ROUTES.CREATE_ASSET);
+  }
+
+  const retrieveAssets = () => {
+    SERVICES.get(`assets/get`)
+    .then(response => {
+        const res = response.data.data;
+        setAllAssets(res);
+        setPending(false);
+    })
+    .catch(error => {
+        const resError = error.response ? error.response.data.message : "Something went wrong please try again";
+        console.log(resError);
+    })
+
   }
 
   function onSubmit({ qdisco }: FormValues) {
@@ -46,9 +76,167 @@ const GetManagers = () => {
     resolver: yupResolver(searchSchema),
   });
 
+  const valData = [10, 20, 100, 170, 180, 400, 500, 150, 250, 180 ,400, 290];
+
+  const revData = [80, 20];
+
+  const options = {
+    options: {
+      chart: {
+        toolbar: {
+          show: false,
+        },
+      },
+      plotOptions: {
+        pie: {
+          startAngle: 0,
+          endAngle: 360,
+        },
+        donut: {
+         size: '100%',
+         labels: {
+            show: true,
+          },
+          total: {
+            show: true,
+            showAlways: true,
+            fontSize: '18px',
+            color: "#131313"
+          },
+          value:{
+            offsetY: -8, // -8 worked for me
+            color:'#ff00ff'
+          }
+       },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      legend: {
+        show: true
+      },
+      colors: ["#6366F140", "#6366F1", "#060552B3", "#060552"],
+      labels: ['Property', 'Technology', 'Vehicles', 'Other'],
+    },
+    series: [80, 20, 50, 35],
+
+  };
+
+  const synchronized = {
+    options: {
+      chart: {
+        toolbar: {
+          show: false,
+        },
+      },
+      plotOptions: {
+        bar: {
+          columnWidth: "20%",
+          endingShape: "flat",
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        show: true,
+        width: 2,
+      },
+      grid: {
+        borderColor: "#F3F4F6",
+        xaxis: {
+          lines: {
+            show: false,
+          },
+        },
+      },
+      colors: ["#6366F1"],
+      xaxis: {
+        labels: {
+          show: true,
+          style: {
+            colors: "#161F6A",
+            fontSize: "14px",
+            fontFamily: "'Lato', sans-serif",
+          },
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      },
+      yaxis: {
+        show: true,
+        labels: {
+          show: true,
+          style: {
+            color: "#161F6A",
+            fontSize: "14px",
+            fontFamily: "'Lato', sans-serif",
+          },
+        },
+      },
+      markers: {
+        size: 4,
+        strokeColors: '#6366F1',
+        strokeWidth: 2,
+        fillOpacity: -1,
+        strokeOpacity: 0.9,
+      },
+    },
+
+    series: [
+      {
+        name: "Asset",
+        data: valData,
+      },
+    ],
+  };
+
   return (
       <div className="w-full h-full py-10 px-8">
-        <div className="flex items-center flex-col bg-[#FFFFFF] shadow rounded pt-6 pb-10">
+        <div className="w-full flex">
+          <Card className="w-2/5 h-[200px] relative">
+            <div className="absolute left-[50%]">
+              <span className="text-accent text-sm font-bold">ASSET OVERVIEW</span>
+            </div>
+            <div className="w-full flex justify-between items-center">
+              <div className="flex flex-wrap" style={{ display: "block" }}>
+                <Chart
+                  options={options.options}
+                  series={options.series}
+                  height="180"
+                  width="100%"
+                  type="donut"
+                />
+              </div>
+
+            </div>
+
+          </Card>
+          <Card className="w-3/5 h-[200px] ml-4">
+            <div className="w-full h-full flex justify-between">
+              <div className="w-full h-full flex flex-col justify-between">
+                <div className="w-full flex justify-between items-center">
+                  <span className="text-accent text-sm font-bold">ASSET VALUE</span>
+                </div>
+                <div className="flex flex-wrap" style={{ display: "block" }}>
+                  <Chart
+                    options={synchronized.options}
+                    series={synchronized.series}
+                    height="150"
+                    width="100%"
+                    type="line"
+                  />
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+        <div className="flex items-center flex-col bg-[#FFFFFF] shadow rounded mt-4 pt-6 pb-10">
           <div className="w-full flex justify-between items-center px-6">
             <span className="text-lg text-body font-semibold">Assets Table</span>
               <div className="flex grow justify-end items-center px-20">
@@ -92,29 +280,15 @@ const GetManagers = () => {
               </Button>
             </div>
 
-            <table className="table-auto w-full mt-10 flex-1">
-              <thead className="bg-accent-300">
-                <tr>
-                  <th className="py-3 pl-6 text-xs">FULLNAME</th>
-                  <th className="py-3 text-xs">USERNAME</th>
-                  <th className="py-3 text-xs">EMAIL</th>
-                  <th className="py-3 pr-6 text-xs">PHONE NO.</th>
-                  <th className="py-3 pr-6 text-xs">STATUS</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                 <td className="pl-6 py-2"><span className="text-body text-[12px] uppercase">Gbenga Daniels</span></td>
-                 <td className="py-2"><span className="text-body text-[12px] uppercase">gbendan213</span></td>
-                 <td className="py-2"><span className="text-body text-[12px] uppercase">gbenga2dan@gmail.com</span></td>
-                 <td className="pr-6"><span className="text-body text-[12px] uppercase">0803100011</span></td>
-                 <td className="pr-6"><span className="text-body text-[12px] uppercase text-[#1BBC2B]">Active</span></td>
-               </tr>
-              </tbody>
-            </table>
+            <div className="w-full mt-10">
+              <AssetsTable
+                assets={allAssets}
+                loading={pending}
+              />
+            </div>
           </div>
         </div>
   );
 };
 
-export default GetManagers;
+export default GetAssets;
