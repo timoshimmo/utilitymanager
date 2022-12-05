@@ -15,6 +15,15 @@ const Sidebar = () => {
       }
   }
 
+  /*
+  case "7":
+    dynamicMenu = globalSettings.assetSideMenu;
+    break;
+  case "5":
+    dynamicMenu = globalSettings.teamSideMenu;
+    break;
+  */
+
   switch (code) {
       case "1":
         dynamicMenu = globalSettings.superSideMenu;
@@ -23,13 +32,12 @@ const Sidebar = () => {
         dynamicMenu = globalSettings.adminSideMenu;
         break;
       case "7":
-        dynamicMenu = globalSettings.assetSideMenu;
+        dynamicMenu = globalSettings.projectSideMenu;
         break;
-      case "5":
-        dynamicMenu = globalSettings.teamSideMenu;
+      case "6":
+        dynamicMenu = globalSettings.storeSideMenu;
         break;
   }
-
 
   return (
     <div className="w-full h-full px-4 flex flex-col">

@@ -68,7 +68,7 @@ const GetTeamMembers = () => {
   });
 
   return (
-      <div className="w-full h-full py-10 px-8">
+      <div className="w-full h-full">
         <div className="flex items-center flex-col bg-[#FFFFFF] shadow rounded pt-6 pb-10">
           <div className="w-full flex justify-between items-center px-6">
             <span className="text-lg text-body font-semibold">Team Members Table</span>

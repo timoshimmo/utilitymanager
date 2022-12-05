@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/ui/button';
-//import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Input from '../../components/ui/forms/input';
-import CardInfo from '../../components/ui/cards/card-info';
-import CardGroup from '../../components/ui/cards/card-group';
 import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import CardInfo from '../../components/ui/cards/card-info';
+import CardGroup from '../../components/ui/cards/card-group';
 import { FilterIcon } from '../../components/icons/filter-icon';
 import { SearchWhiteIcon } from '../../components/icons/search-white-icon';
-import UsersList from "../../components/users/users-list";
-//import axios from 'axios';
+import ProjectsTable from "../../components/projects/projects-table";
 import SERVICES from '../../util/webservices';
+import { ROUTES } from '../../lib/route-links';
 
 type FormValues = {
   qdisco: string;
@@ -28,33 +28,34 @@ const defaultValues = {
   qdisco: "",
 };
 
-const GetUsers = () => {
+const GetProjects = () => {
 
-//  const history = useHistory();
-  const [users, setUsers] = useState([]);
+  const history = useHistory();
+  const [inventory, setInventory] = useState([]);
+  const [openTab, setOpenTab] = React.useState(1);
 
   useEffect(() => {
-    retrieveUsers();
+    retrieveProjects();
  }, []);
 
-  const retrieveUsers = () => {
-    SERVICES.get(`users/get/all`)
-    .then(response => {
-      const res = response.data.data;
-    //  console.log(res);
-      setUsers(res);
+  const navNew = () => {
+      history.push(ROUTES.CREATE_PROJECTS);
+  }
 
+  const retrieveProjects = () => {
+    SERVICES.get(`projects/get`)
+    .then(response => {
+        const res = response.data.data;
+        setInventory(res);
     })
     .catch(error => {
-      const resError = error.response ? error.response.data.message : "Something went wrong please try again";
-      console.log(resError);
+        const resError = error.response ? error.response.data.message : "Something went wrong please try again";
+        console.log(resError);
     })
 
   }
 
-
   function onSubmit({ qdisco }: FormValues) {
-
     console.log("Searching for " + qdisco);
   }
 
@@ -73,24 +74,24 @@ const GetUsers = () => {
         <div className="w-full flex my-4">
           <CardInfo
             className="w-2/5 h-[180px] mr-4"
-            title="TOTAL USERS"
-            subtitle="LAST UPDATED 20 NOV 2022"
+            title="PROJECTS"
+            subtitle="TOTAL PROJECTS"
             value="0"
           />
           <CardGroup
             className="w-3/5 h-[180px]"
-            titleLeft="TRANSACTION"
-            titleRight="ACTIVE"
-            subtitleLeft="LAST UPDATED 12 SEP 2022"
+            titleLeft="PENDING PROJECTS"
+            titleRight="COMPLETED PROJECTS"
+            subtitleLeft="LAST UPDATED 22 AUG 2022"
             subtitleRight="LAST UPDATED 22 AUG 2022"
-            valueLeft="₦0.00"
+            valueLeft="0"
             valueRight="0"
           />
         </div>
         <div className="flex items-center flex-col bg-[#FFFFFF] shadow rounded pt-6 pb-10">
           <div className="w-full flex justify-between items-center px-6">
-            <span className="text-lg text-body font-semibold">Users Table</span>
-              <div className="flex grow justify-end items-center">
+            <span className="text-lg text-body font-semibold">Projects Table</span>
+              <div className="flex grow justify-end items-center px-20">
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                   <div className="flex">
                     <div className="flex relative">
@@ -101,7 +102,6 @@ const GetUsers = () => {
                         placeholder="Search"
                         className="w-[250px]"
                         dimension="small"
-                        error={errors.qdisco?.message!}
                       />
                       <label
                         className="absolute right-3 top-5 -mt-2 text-body cursor-pointer"
@@ -124,11 +124,17 @@ const GetUsers = () => {
                   EXPORT CSV
                 </Button>
               </div>
+              <Button
+              className="h-[36px] w-[120px] text-xs"
+              onClick={navNew}
+              >
+                ADD NEW
+              </Button>
             </div>
 
             <div className="w-full mt-10">
-              <UsersList
-                users={users}
+              <ProjectsTable
+                projects={inventory}
               />
             </div>
           </div>
@@ -136,4 +142,4 @@ const GetUsers = () => {
   );
 };
 
-export default GetUsers;
+export default GetProjects;

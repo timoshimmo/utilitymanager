@@ -29,6 +29,12 @@ import GetTeamMembers from '../pages/team-member';
 import CreateTeamMember from '../pages/team-member/create';
 import GetTickets from '../pages/support';
 import Messages from '../pages/support/messages';
+import GetInventory from '../pages/store';
+import CreateInventory from '../pages/store/create';
+import GetProjects from '../pages/projects';
+import CreateProject from '../pages/projects/create';
+import AccountsOffice from '../pages/account';
+import GetItemsRequest from '../pages/store/item-request';
 
  const RoutesComponent = () => {
 
@@ -164,6 +170,42 @@ import Messages from '../pages/support/messages';
           component={Messages}
           layout={Main}
           path={ROUTES.TICKET_MESSAGES}
+        />
+
+      <PrivateRoute
+         component={GetInventory}
+         layout={Main}
+         path={ROUTES.INVENTORY}
+       />
+
+      <PrivateRoute
+         component={CreateInventory}
+         layout={Main}
+         path={ROUTES.CREATE_INVENTORY}
+       />
+
+       <PrivateRoute
+          component={GetProjects}
+          layout={Main}
+          path={ROUTES.PROJECTS}
+        />
+
+       <PrivateRoute
+          component={CreateProject}
+          layout={Main}
+          path={ROUTES.CREATE_PROJECTS}
+        />
+
+      <PrivateRoute
+         component={AccountsOffice}
+         layout={Main}
+         path={ROUTES.ACCOUNTS}
+       />
+
+       <PrivateRoute
+          component={GetItemsRequest}
+          layout={Main}
+          path={ROUTES.ITEM_REQUESTS}
         />
 
       <Redirect  to="/login" />

@@ -67,3 +67,34 @@ export declare type TicketsType = {
   disco: any;
   createdDate: any;
 };
+
+export declare type InventoryType = {
+  _id: string;
+  type: string;
+  description: string;
+  value: number;
+  quantity: number;
+  status: number;
+  createdDate: any;
+};
+
+export declare type ProjectsType = {
+  _id: string;
+  title: string;
+  description: string;
+  location: string;
+  group: any;
+  equipments: any;
+  status: number;
+  createdDate: any;
+};
+
+export declare type ItemsRequestType = {
+  _id: string;
+  project: any;
+  item: any;
+  description: string;
+  requestQty: number;
+  status: number;
+  createdDate: any;
+};

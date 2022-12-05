@@ -1,9 +1,11 @@
 import DataTable, { TableColumn } from 'react-data-table-component';
+import { useHistory } from 'react-router-dom';
 import { MenuDotsIcon } from '../../components/icons/menu-dots';
 import {
   TicketsType,
 } from "../../ts-types/generated";
 import moment from 'moment';
+import { ROUTES } from '../../lib/route-links';
 
 export type IProps = {
   tickets?: any;
@@ -11,6 +13,8 @@ export type IProps = {
 
 
 const TicketsTable = ({ tickets }: IProps) => {
+
+  const history = useHistory();
 
   const customStyles = {
     rows: {
@@ -105,7 +109,14 @@ const TicketsTable = ({ tickets }: IProps) => {
         </button>
       ),
     },
-  ]
+  ];
+
+  const handleRowClicked = (row: any) => {
+    history.push({
+      pathname: `${ROUTES.TICKET_MESSAGES}`,
+      state:{ obj: row }
+    });
+  }
 
   return (
       <DataTable
@@ -117,6 +128,7 @@ const TicketsTable = ({ tickets }: IProps) => {
         customStyles={customStyles}
         highlightOnHover
 		    pointerOnHover
+        onRowClicked={handleRowClicked}
       />
 
 );

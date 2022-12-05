@@ -68,7 +68,7 @@ export const selectStyles = {
   }),
   multiValue: (provided: any, _: any) => ({
     ...provided,
-    backgroundColor: "rgb(var(--color-accent-400))",
+    backgroundColor: "rgb(var(--color-accent-700))",
     borderRadius: 9999,
     overflow: "hidden",
     boxShadow:

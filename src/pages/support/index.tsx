@@ -6,6 +6,8 @@ import CardInfo from '../../components/ui/cards/card-info';
 import CardGroup from '../../components/ui/cards/card-group';
 import { CalendarIcon } from '../../components/icons/calendar';
 import SERVICES from '../../util/webservices';
+import { ROUTES } from '../../lib/route-links';
+import { RightArrowIcon } from '../../components/icons/right-arrow';
 //import axios from 'axios';
 
 const GetTickets = () => {
@@ -31,6 +33,10 @@ const GetTickets = () => {
         console.log(error.response.data.error);
     })
 
+  }
+
+  const handleViewMessagesClicked = (row: any) => {
+    history.push(ROUTES.TICKET_MESSAGES);
   }
 
   return (
@@ -64,6 +70,12 @@ const GetTickets = () => {
         <div className="flex items-center flex-col bg-[#FFFFFF] shadow rounded pt-6 pb-10 grow">
           <div className="w-full flex justify-between items-center px-6">
             <span className="text-lg text-body font-semibold">Support Tickets</span>
+            <button
+              className="text-xs text-muted font-semibold h-16 flex items-center hover:bg-transparent focus:bg-transparent ml-6"
+              onClick={handleViewMessagesClicked}>
+              VIEW MESSAGES
+              <RightArrowIcon className="w-5 h-5 ml-2 mt-1" style={{  fontSize: 16, fill:'none' }} />
+            </button>
             <div className="flex grow justify-end items-center">
               <Button
               className="h-[36px] w-[160px] text-xs ml-5"

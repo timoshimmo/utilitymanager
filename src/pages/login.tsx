@@ -63,6 +63,7 @@ const Login = () => {
         localStorage.setItem('userFullName', res.data.fullName);
         localStorage.setItem('discoId', res.data.discoId);
         localStorage.setItem('token', res.data.token);
+        localStorage.setItem('userid', res.data.id);
         if(res.data.permissionCode) {
         //  console.log("PERMISSION CODE:" + res.data.permissionCode);
           localStorage.setItem('permissionCode', res.data.permissionCode);
@@ -75,8 +76,6 @@ const Login = () => {
             history.push('/home');
           }
         }
-
-
       })
       .catch(error => {
         setLoginLoading(false);
@@ -105,8 +104,8 @@ const Login = () => {
         <div className="flex items-center flex-col lg:w-2/5 w-5/6 bg-[#FFFFFF] shadow rounded pt-6 px-6 pb-10 border border-gray-100">
           <img
             alt="Logo"
-            src="/images/myutility_placeholder_logo.png"
-            height="80"
+            src="/images/utility_manager_logo_main.png"
+            height="90"
             width="80"
           />
           <span className="mt-3 text-[#888888] lg:text-sm text-xs text-center lg:w-80">Login to continue, we have made facility management experience easy</span>

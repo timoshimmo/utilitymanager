@@ -18,7 +18,7 @@ type FormValues = {
   permission: any;
 }
 
-const superadminSchema = yup.object().shape({
+const managersSchema = yup.object().shape({
   fullName: yup
     .string()
     .required('Fullname is required'),
@@ -53,7 +53,7 @@ const RegisterManagers = () => {
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues,
-    resolver: yupResolver(superadminSchema),
+    resolver: yupResolver(managersSchema),
   });
 
   function onSubmit({ fullName, email, mobileNo, permission }: FormValues) {
