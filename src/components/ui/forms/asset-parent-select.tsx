@@ -10,19 +10,19 @@ interface Props {
 }
 
 const data = [
-  { value: 'Feeder', label: 'Feeder' },
-  { value: 'Transformer', label: 'Transformer' },
-  { value: 'Meter', label: 'Meter' },
-  { value: 'Pole', label: 'Pole' },
+  { value: 'abuja-central', label: 'Central Abuja Sub-Station' },
+  { value: 'abuja-south', label: 'Abuja-South Sub-Station' },
+  { value: 'abuja-east', label: 'Abuja East Sub-Station' },
+  { value: 'abuja-west', label: 'Abuja West Sub-Station' },
 ];
 
-const AssetTypeSelect = ({ control, error, compulsory = false }: Props) => {
+const AssetParentSelect = ({ control, error, compulsory = false }: Props) => {
 
   return (
     <div className="mb-5">
-      <Label>Asset Type{compulsory && <span className="text-sm text-[#EA0E0E]">*</span>}</Label>
+      <Label>Asset Parent{compulsory && <span className="text-sm text-[#EA0E0E]">*</span>}</Label>
       <SelectInput
-        name="assetType"
+        name="assetParent"
         control={control}
         getOptionLabel={(option: any) => option.label}
         getOptionValue={(option: any) => option.value}
@@ -33,4 +33,4 @@ const AssetTypeSelect = ({ control, error, compulsory = false }: Props) => {
   );
 };
 
-export default AssetTypeSelect;
+export default AssetParentSelect;

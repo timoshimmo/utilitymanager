@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ConfirmationCard from "../ui/cards/confirmation-card";
+import UpdateRequestCard from "../ui/cards/confirmation-card";
 import {
   useModalAction,
   useModalState,
@@ -7,23 +7,46 @@ import {
 import { toast } from "react-toastify";
 import SERVICES from '../../util/webservices';
 
-const UpdateStatusView = () => {
+const UpdateItemRequestView = () => {
   const [loading, setLoading] = useState(false);
-
   const { closeModal } = useModalAction();
   const { data } = useModalState();
+
+  //let mTitle = '';
+  let desc = '';
+
+  if(data.status === 0) {
+    desc = "Approve item availability?";
+  }
+  else {
+    desc = "Disapprove item availability?";
+  }
+
+
 
   async function handleUpdate() {
     if(!loading) {
 
       setLoading(true);
 
-      const obj = {
-        ticketId: data.id,
-        status: data.val
-      };
+    /*  const obj = {
+        ticketId: data.id
+      };*/
 
-      SERVICES.put(`tickets/update`, obj)
+      console.log("POPUP REQ ID: ", data.id);
+      console.log("POPUP REQ STATUS: ", data.status);
+
+      setLoading(false);
+      closeModal();
+      if (data.status === 0) {
+        toast.success("Request has been approved!");
+      }
+      else {
+        toast.success("Request has been disapproved!");
+      }
+
+
+    /*  SERVICES.put(`tickets/update`, obj)
       .then(response => {
           const res = response.data;
           setLoading(false);
@@ -38,7 +61,8 @@ const UpdateStatusView = () => {
           console.log(resError);
           console.log(error.response.status);
           console.log(error.response.data.error);
-      })
+      });
+      */
 
     }
 
@@ -46,15 +70,15 @@ const UpdateStatusView = () => {
   }
 
   return (
-    <ConfirmationCard
+    <UpdateRequestCard
       onCancel={closeModal}
       onConfirm={handleUpdate}
       confirmBtnText="Yes"
-      title="Ticket Status"
-      description="Are you sure you want to update ticket status?"
+      title="Item Request Status"
+      description={desc}
       confirmBtnLoading={loading}
     />
   );
 };
 
-export default UpdateStatusView;
+export default UpdateItemRequestView;

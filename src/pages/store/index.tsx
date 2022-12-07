@@ -124,7 +124,6 @@ const GetInventory = () => {
     SERVICES.get(`item-request/get`)
     .then(response => {
         const res = response.data.data;
-        console.log("REQUEST:", res);
         setRequests(res);
     })
     .catch(error => {

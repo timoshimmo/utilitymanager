@@ -118,12 +118,9 @@ const { openModal } = useModalAction();
   }
 
   const newArr = newEquipmentList.filter(equip => equip.name !== "");
-  console.log("EQUIPS", newArr);
 
   function onSubmit({ title, description, location, teamGroup }: FormValues) {
-  //  e.preventDefault();
 
-    console.log("NAME: " + title);
     if(!projectLoading) {
 
       setProjectLoading(true);
@@ -137,7 +134,6 @@ const { openModal } = useModalAction();
       }
 
       const filArr = newEquipmentList.filter(equip => equip.name !== "");
-      console.log("REQUEST EQUIPS", filArr);
 
       const obj = {
         title: title,

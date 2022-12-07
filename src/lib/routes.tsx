@@ -35,6 +35,8 @@ import GetProjects from '../pages/projects';
 import CreateProject from '../pages/projects/create';
 import AccountsOffice from '../pages/account';
 import GetItemsRequest from '../pages/store/item-request';
+import GetSubstation from '../pages/substation';
+import CreateSubstation from '../pages/substation/create';
 
  const RoutesComponent = () => {
 
@@ -123,6 +125,18 @@ import GetItemsRequest from '../pages/store/item-request';
                 layout={Main}
                 path="/create-asset"
               />
+
+              <PrivateRoute
+                 component={GetSubstation}
+                 layout={Main}
+                 path="/substation"
+               />
+
+              <PrivateRoute
+                   component={CreateSubstation}
+                   layout={Main}
+                   path="/create-substation"
+                 />
 
           <PrivateRoute
              component={GetUsers}

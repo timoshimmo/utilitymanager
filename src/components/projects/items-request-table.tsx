@@ -1,15 +1,79 @@
+import React, { Fragment } from 'react';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import { MenuDotsIcon } from '../../components/icons/menu-dots';
+import { CheckIcon } from '../../components/icons/check-icon';
+import TrashIcon from '../../components/icons/trash-icon';
 import {
   ItemsRequestType,
 } from "../../ts-types/generated";
+import { Menu, Transition } from '@headlessui/react';
+import { ArrowDownIcon } from '../../components/icons/arrow-down';
+import cn from 'classnames';
+import { useModalAction } from "../ui/modal/modal.context";
 
 export type IProps = {
   requests?: any;
 };
 
+/*
+<button className="relative h-7 w-7 flex justify-center items-center rounded-full hover:bg-gray-200 focus:bg-gray-200">
+  <MenuDotsIcon className="w-4 h-4" />
+</button>
+
+<Menu
+    as="div"
+    className="relative inline-block ltr:text-left rtl:text-right"
+  >
+    <Menu.Button className="flex items-center focus:outline-none">
+
+      {({ open }) => (
+          <MenuDotsIcon className="w-4 h-4" />
+      )}
+    </Menu.Button>
+
+    <Transition
+      as={Fragment}
+      enter="transition ease-out duration-100"
+      enterFrom="transform opacity-0 scale-95"
+      enterTo="transform opacity-100 scale-100"
+      leave="transition ease-in duration-75"
+      leaveFrom="transform opacity-100 scale-100"
+      leaveTo="transform opacity-0 scale-95"
+    >
+      <Menu.Items
+        as="ul"
+        className={cn(
+          'absolute mt-1 w-48 rounded shadow bg-accent shadow-700 focus:outline-none right-0 origin-top-right z-[1000]'
+        )}
+      >
+        <Menu.Item key={1}>
+              {({ active }) => (
+                <li>
+                  <button
+                    onClick={() => handleClick(row._id)}
+                    className={cn(
+                      'block w-full py-2.5 px-6 text-sm font-semibold capitalize text-light transition duration-200 hover:text-gray-200 focus:outline-none ltr:text-left rtl:text-right',
+                      active ? 'text-light' : 'text-light'
+                    )}
+                  >
+                    Confirm
+                  </button>
+                </li>
+              )}
+        </Menu.Item>
+    </Menu.Items>
+  </Transition>
+</Menu>
+*/
+
 
 const ItemsRequestTable = ({ requests }: IProps) => {
+
+  const { openModal } = useModalAction();
+
+  function handleClick(id: string, status: number) {
+    openModal("CONFIRM_ITEM_REQUEST", { id, status });
+    console.log("ITEM ID:", id);
+  }
 
   const customStyles = {
     rows: {
@@ -86,9 +150,15 @@ const ItemsRequestTable = ({ requests }: IProps) => {
       width: "60px",
       right: true,
       cell: row => (
-        <button className="relative h-7 w-7 flex justify-center items-center rounded-full hover:bg-gray-200 focus:bg-gray-200">
-          <MenuDotsIcon className="w-4 h-4" />
-        </button>
+        <div className="flex space-x-4">
+          <button className="relative h-7 w-7 flex justify-center items-center rounded-full hover:bg-gray-200 focus:bg-transparent"
+          onClick={()=>handleClick(row._id, row.status)}>
+            <CheckIcon className="w-4 h-4" />
+          </button>
+          <button className="relative h-7 w-7 flex justify-center items-center rounded-full hover:bg-gray-200 focus:transparent">
+            <TrashIcon className="w-4 h-4" />
+          </button>
+        </div>
       ),
     },
   ]

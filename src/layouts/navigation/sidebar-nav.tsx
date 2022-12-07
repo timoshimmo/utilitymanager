@@ -32,9 +32,9 @@ const SidebarNav: React.FC<SidebarNavProps & RouteComponentProps> = ({menus}) =>
   }
 
   return (
-    <div className="w-full relative grow">
+    <div className="w-full h-[80%]">
       <p className="text-xs text-[#FFFFFF] opacity-60 mb-4">MAIN</p>
-      <div className="w-full overflow-y-auto h-[68%] max-h-[68%] scrollbar-hide">
+      <div className="w-full overflow-y-auto h-[80%] max-h-[80%] scrollbar-hide">
         <ul className="w-full">
           {menus.map((item: any, idx:number) => (
             <li className="py-1" key={idx}>

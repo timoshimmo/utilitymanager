@@ -27,4 +27,6 @@ export const ROUTES = {
   PROJECTS: '/projects',
   CREATE_PROJECTS: '/create-project',
   ITEM_REQUESTS: '/item-requests',
+  CREATE_SUBSTATION: '/create-substation',
+  SUBSTATION: '/substation'
 };

@@ -2,7 +2,8 @@ import React, {PropsWithChildren} from "react";
 
 export type MODAL_VIEWS =
   | "UPDATE_STATUS"
-  | "ADD_EQUIPMENT";
+  | "ADD_EQUIPMENT"
+  | "CONFIRM_ITEM_REQUEST";
 
 interface State {
   view?: MODAL_VIEWS;

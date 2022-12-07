@@ -32,6 +32,7 @@ const Login = () => {
   const history = useHistory();
 
   //let [serverError, setServerError] = useState<string | null>(null);
+  //http://localhost:4002/admins/login
   const [loginLoading, setLoginLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -55,17 +56,15 @@ const Login = () => {
         password: password
       };
 
-      axios.post(`http://localhost:4002/admins/login`, obj)
+      axios.post(`https://wicked-pike-kilt.cyclic.app/admins/login`, obj)
       .then(response => {
         const res = response.data;
-        console.log("LOGIN: " + JSON.stringify(res.data));
         setLoginLoading(false);
         localStorage.setItem('userFullName', res.data.fullName);
         localStorage.setItem('discoId', res.data.discoId);
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('userid', res.data.id);
         if(res.data.permissionCode) {
-        //  console.log("PERMISSION CODE:" + res.data.permissionCode);
           localStorage.setItem('permissionCode', res.data.permissionCode);
           if(res.data.permissionCode !== "1") {
             localStorage.setItem('globalTitle', "Dashboard");

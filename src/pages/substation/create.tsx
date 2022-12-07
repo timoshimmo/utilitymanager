@@ -42,7 +42,7 @@ const defaultValues = {
 };
 
 
-const CreateAssets = () => {
+const CreateSubstation = () => {
 
   //let [serverError, setServerError] = useState<string | null>(null);
   const [statusLoading, setStatusLoading] = useState(false);
@@ -116,7 +116,7 @@ const CreateAssets = () => {
         <button className="relative h-7 w-7 flex justify-center items-center rounded-full hover:bg-gray-200 focus:bg-gray-200 mr-6">
           <BackArrowIcon className="w-6 h-6" />
         </button>
-        <span className="text-body text-[28px] font-bold">Create Asset</span>
+        <span className="text-body text-[28px] font-bold">Create Substation</span>
       </div>
       <div className="mt-8 w-full px-4">
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -142,12 +142,6 @@ const CreateAssets = () => {
               {successMsg === '' ? (
                 <>
                   <AssetTypeSelect
-                    control={control}
-                    error={(errors?.assetType as any)?.message}
-                    compulsory={true}
-                  />
-
-                  <AssetParentSelect
                     control={control}
                     error={(errors?.assetType as any)?.message}
                     compulsory={true}
@@ -209,4 +203,4 @@ const CreateAssets = () => {
 
 }
 
-export default CreateAssets;
+export default CreateSubstation;
