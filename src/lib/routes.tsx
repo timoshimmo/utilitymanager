@@ -45,133 +45,133 @@ import CreateSubstation from '../pages/substation/create';
       <PrivateRoute
          component={Login}
          layout={Minimal}
-         path="/login"
+         path={ROUTES.LOGIN}
        />
 
        <PrivateRoute
           component={VerifyUser}
           layout={Minimal}
-          path="/verified-user"
+          path={ROUTES.VERIFIED_USER}
         />
 
         <PrivateRoute
            component={ResetPassword}
            layout={Minimal}
-           path="/reset/:permissionCode/:token"
+           path={ROUTES.RESET}
          />
 
          <PrivateRoute
             component={ForgotPassword}
             layout={Minimal}
-            path="/forgot-password"
+            path={ROUTES.FORGOT}
           />
 
          <PrivateRoute
             component={Dashboard}
             layout={Main}
-            path="/dashboard"
+            path={ROUTES.DASHBOARD}
           />
 
           <PrivateRoute
              component={Home}
              layout={Main}
-             path="/home"
+             path={ROUTES.HOME}
            />
 
           <PrivateRoute
              component={RegisterSuperAdmin}
              layout={Main}
-             path="/register-admin"
+             path={ROUTES.REGISTER_ADMIN}
            />
 
           <PrivateRoute
                component={GetSuperAdmin}
                layout={Main}
-               path="/super-admins"
+               path={ROUTES.SUPERADMINS}
              />
 
          <PrivateRoute
             component={RegisterDiscos}
             layout={Main}
-            path="/register-disco"
+            path={ROUTES.REGISTER_DISCO}
           />
 
          <PrivateRoute
               component={GetDiscos}
               layout={Main}
-              path="/discos"
+              path={ROUTES.DISCOS}
             />
 
           <PrivateRoute
              component={RegisterManagers}
              layout={Main}
-             path="/register-managers"
+             path={ROUTES.REGISTER_MANAGERS}
            />
 
           <PrivateRoute
                component={GetManagers}
                layout={Main}
-               path="/managers"
+               path={ROUTES.MANAGERS}
              />
 
            <PrivateRoute
               component={GetAssets}
               layout={Main}
-              path="/assets"
+              path={ROUTES.ASSETS}
             />
 
            <PrivateRoute
                 component={CreateAssets}
                 layout={Main}
-                path="/create-asset"
+                path={ROUTES.CREATE_ASSET}
               />
 
-              <PrivateRoute
-                 component={GetSubstation}
-                 layout={Main}
-                 path="/substation"
-               />
+          <PrivateRoute
+             component={GetSubstation}
+             layout={Main}
+             path={ROUTES.SUBSTATION}
+           />
 
-              <PrivateRoute
-                   component={CreateSubstation}
-                   layout={Main}
-                   path="/create-substation"
-                 />
+          <PrivateRoute
+               component={CreateSubstation}
+               layout={Main}
+               path={ROUTES.CREATE_SUBSTATION}
+             />
 
           <PrivateRoute
              component={GetUsers}
              layout={Main}
-             path="/users"
+             path={ROUTES.USERS}
            />
 
           <PrivateRoute
                component={CreateUsers}
                layout={Main}
-               path="/create-users"
+               path={ROUTES.CREATE_USER}
              />
 
          <PrivateRoute
             component={GetTeamGroups}
             layout={Main}
-            path="/team-groups"
+            path={ROUTES.TEAM_GROUPS}
           />
 
          <PrivateRoute
             component={CreateTeamGroup}
             layout={Main}
-            path="/create-team-group"
+            path={ROUTES.CREATE_TEAM_GROUP}
           />
 
         <PrivateRoute
            component={GetTeamMembers}
            layout={Main}
-           path="/team-members"
+           path={ROUTES.TEAM_MEMBERS}
          />
 
         <PrivateRoute
            component={CreateTeamMember}
            layout={Main}
-           path="/create-team-member"
+           path={ROUTES.CREATE_TEAM_MEMBER}
          />
 
        <PrivateRoute
@@ -222,7 +222,7 @@ import CreateSubstation from '../pages/substation/create';
           path={ROUTES.ITEM_REQUESTS}
         />
 
-      <Redirect  to="/login" />
+      <Redirect to={ROUTES.LOGIN} />
     </Switch>
   );
 

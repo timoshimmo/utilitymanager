@@ -136,7 +136,7 @@ const Login = () => {
                   variant="outline"
                   className="mb-5"
                   placeholder="*********"
-                  forgotPageLink="/forgot-password"
+                  forgotPageLink="/forgotpassword"
                 />
                 <Button
                   className="h-11 w-full mt-8"

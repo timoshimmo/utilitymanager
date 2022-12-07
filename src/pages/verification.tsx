@@ -5,10 +5,10 @@ const VerifyUser = () => {
 
   return (
       <div className="flex justify-center items-center w-full h-screen">
-        <div className="flex items-center flex-col xs:w-5/6 w-2/5 bg-[#FFFFFF] rounded-sm p-6">
+        <div className="flex items-center flex-col xs:w-5/6 w-2/5 bg-[#FFFFFF] shadow rounded-sm p-6">
           <img
             alt="Logo"
-            src="/images/myutility_placeholder_logo.png"
+            src="/images/utility_manager_logo_main.png"
             height="80"
             width="80"
           />

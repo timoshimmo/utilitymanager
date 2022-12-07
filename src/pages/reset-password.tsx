@@ -59,7 +59,7 @@ const ResetPassword = () => {
         };
 
         if(permissionCode !== "0") {
-          axios.post(`https://myutilityapi.herokuapp.com/admins/reset/${token}`, obj)
+          axios.post(`https://utilityapi.onrender.com/admins/reset/${token}`, obj)
           .then(response => {
             const res = response.data;
             console.log(res);
@@ -74,7 +74,7 @@ const ResetPassword = () => {
           })
         }
         else {
-          axios.post(`https://myutilityapi.herokuapp.com/users/reset/${token}`, obj)
+          axios.post(`https://utilityapi.onrender.com/users/reset/${token}`, obj)
           .then(response => {
             const res = response.data;
             console.log(res);
@@ -102,7 +102,7 @@ const ResetPassword = () => {
       <div className="flex items-center flex-col xs:w-5/6 w-2/5 bg-[#FFFFFF] shadow rounded-sm p-6">
         <img
           alt="Logo"
-          src="/images/myutility_placeholder_logo.png"
+          src="/images/utility_manager_logo_main.png"
           height="80"
           width="80"
         />

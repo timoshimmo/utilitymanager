@@ -36,7 +36,7 @@ const GetTeamMembers = () => {
  }, []);
 
   const navNew = () => {
-      history.push(ROUTES.CREATE_TEAM_MEMBERS);
+      history.push(ROUTES.CREATE_TEAM_MEMBER);
   }
 
   const retrieveTeamMembers = () => {

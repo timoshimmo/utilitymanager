@@ -50,7 +50,7 @@ const ForgotPassword = () => {
         email: email
       };
 
-      axios.post(`http://localhost:4002/admins/forgot`, obj)
+      axios.post(`https://utilityapi.onrender.com/admins/forgot`, obj)
       .then(response => {
         const res = response.data;
         console.log(res);
@@ -73,7 +73,7 @@ const ForgotPassword = () => {
         <div className="flex items-center flex-col xs:w-5/6 w-2/5 bg-[#FFFFFF] shadow rounded pt-6 px-6 pb-10 border border-gray-100">
           <img
             alt="Logo"
-            src="/images/myutility_placeholder_logo.png"
+            src="/images/utility_manager_logo_main.png"
             height="80"
             width="80"
           />
