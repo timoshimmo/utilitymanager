@@ -56,7 +56,7 @@ const Login = () => {
         password: password
       };
 
-      axios.post(`https://wicked-pike-kilt.cyclic.app/admins/login`, obj)
+      axios.post(`https://utilityapi.onrender.com/admins/login`, obj)
       .then(response => {
         const res = response.data;
         setLoginLoading(false);
