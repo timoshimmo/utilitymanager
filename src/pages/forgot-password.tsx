@@ -50,7 +50,7 @@ const ForgotPassword = () => {
         email: email
       };
 
-      axios.post(`https://utilityapi.onrender.com/admins/forgot`, obj)
+      axios.post(`https://utilityapi.vercel.app/admins/forgot`, obj)
       .then(response => {
         const res = response.data;
         console.log(res);

@@ -7,16 +7,10 @@ interface Props {
   control: Control<any>;
   error: string | undefined;
   compulsory?: boolean;
+  parents: any;
 }
 
-const data = [
-  { value: 'abuja-central', label: 'Central Abuja Sub-Station' },
-  { value: 'abuja-south', label: 'Abuja-South Sub-Station' },
-  { value: 'abuja-east', label: 'Abuja East Sub-Station' },
-  { value: 'abuja-west', label: 'Abuja West Sub-Station' },
-];
-
-const AssetParentSelect = ({ control, error, compulsory = false }: Props) => {
+const AssetParentSelect = ({ control, error, compulsory = false, parents }: Props) => {
 
   return (
     <div className="mb-5">
@@ -24,9 +18,9 @@ const AssetParentSelect = ({ control, error, compulsory = false }: Props) => {
       <SelectInput
         name="assetParent"
         control={control}
-        getOptionLabel={(option: any) => option.label}
-        getOptionValue={(option: any) => option.value}
-        options={data}
+        getOptionLabel={(option: any) => option.description}
+        getOptionValue={(option: any) => option._id}
+        options={parents}
       />
       <ValidationError message={error} />
     </div>

@@ -54,14 +54,6 @@ const CreateTeamGroup = () => {
 
       setTeamGroupLoading(true);
 
-      let mDiscoID = '';
-      if (typeof localStorage !== 'undefined') {
-          const dId = localStorage.getItem('discoId');
-          if(dId !== null) {
-            mDiscoID = dId;
-          }
-      }
-
       const obj = {
         name: name,
         branch: branch,

@@ -21,7 +21,6 @@ export const globalSettings = {
   ],
   adminSideMenu: [
     { href: ROUTES.DASHBOARD, label: 'Dashboard', icon: '/images/dashboard.svg' },
-    { href: ROUTES.SUBSTATION, label: 'Substation', icon: '/images/dashboard.svg' },
     { href: ROUTES.ASSETS, label: 'Assets', icon: '/images/pie-chart.svg' },
     { href: ROUTES.MANAGERS, label: 'Managers', icon: '/images/manager-svgrepo-com.svg' },
     { href: ROUTES.TICKETS, label: 'User Support', icon: '/images/user-support.svg' },

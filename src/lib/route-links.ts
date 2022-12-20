@@ -9,6 +9,7 @@ export const ROUTES = {
   PROFILE: '/profile',
   DASHBOARD: '/dashboard',
   ASSETS: '/assets',
+  ASSET_DETAILS: '/asset',
   TEAM_GROUPS: '/team-groups',
   TEAM_MEMBERS: '/team-members',
   HOME: '/home',

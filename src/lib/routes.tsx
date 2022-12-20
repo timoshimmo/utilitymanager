@@ -37,6 +37,7 @@ import AccountsOffice from '../pages/account';
 import GetItemsRequest from '../pages/store/item-request';
 import GetSubstation from '../pages/substation';
 import CreateSubstation from '../pages/substation/create';
+import AssetDetails from '../pages/assets/details';
 
  const RoutesComponent = () => {
 
@@ -222,6 +223,12 @@ import CreateSubstation from '../pages/substation/create';
           path={ROUTES.ITEM_REQUESTS}
         />
 
+      <PrivateRoute
+         component={AssetDetails}
+         layout={Main}
+         path={ROUTES.ASSET_DETAILS}
+       />
+        
       <Redirect to={ROUTES.LOGIN} />
     </Switch>
   );

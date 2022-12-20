@@ -10,20 +10,17 @@ interface Props {
 }
 
 const data = [
-  { value: 0, label: 'Very Good' },
-  { value: 1, label: 'Good' },
-  { value: 2, label: 'Operational' },
-  { value: 3, label: 'Poor' },
-  { value: 4, label: 'Damaged' },
+  { value: 1, label: 'Yes' },
+  { value: 0, label: 'No' },
 ];
 
-const AssetStatusSelect = ({ control, error, compulsory }: Props) => {
+const AdequatelySecuredSelect = ({ control, error, compulsory }: Props) => {
 
   return (
     <div className="mb-5">
-      <Label>Asset Status{compulsory && <span className="text-sm text-[#EA0E0E]">*</span>}</Label>
+      <Label>Adequately Secured{compulsory && <span className="text-sm text-[#EA0E0E]">*</span>}</Label>
       <SelectInput
-        name="status"
+        name="secured"
         control={control}
         getOptionLabel={(option: any) => option.label}
         getOptionValue={(option: any) => option.value}
@@ -34,4 +31,4 @@ const AssetStatusSelect = ({ control, error, compulsory }: Props) => {
   );
 };
 
-export default AssetStatusSelect;
+export default AdequatelySecuredSelect;

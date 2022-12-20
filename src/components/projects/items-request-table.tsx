@@ -49,7 +49,7 @@ export type IProps = {
               {({ active }) => (
                 <li>
                   <button
-                    onClick={() => handleClick(row._id)}
+                    onClick={() => handleUpdate(row._id)}
                     className={cn(
                       'block w-full py-2.5 px-6 text-sm font-semibold capitalize text-light transition duration-200 hover:text-gray-200 focus:outline-none ltr:text-left rtl:text-right',
                       active ? 'text-light' : 'text-light'
@@ -70,9 +70,13 @@ const ItemsRequestTable = ({ requests }: IProps) => {
 
   const { openModal } = useModalAction();
 
-  function handleClick(id: string, status: number) {
+  function handleUpdate(id: string, status: number) {
     openModal("CONFIRM_ITEM_REQUEST", { id, status });
-    console.log("ITEM ID:", id);
+  }
+
+  function handleDelete(id: string) {
+    const link = 'item-request/delete';
+    openModal("DELETE_VIEW", { id, link });
   }
 
   const customStyles = {
@@ -152,10 +156,11 @@ const ItemsRequestTable = ({ requests }: IProps) => {
       cell: row => (
         <div className="flex space-x-4">
           <button className="relative h-7 w-7 flex justify-center items-center rounded-full hover:bg-gray-200 focus:bg-transparent"
-          onClick={()=>handleClick(row._id, row.status)}>
+          onClick={()=>handleUpdate(row._id, row.status)}>
             <CheckIcon className="w-4 h-4" />
           </button>
-          <button className="relative h-7 w-7 flex justify-center items-center rounded-full hover:bg-gray-200 focus:transparent">
+          <button className="relative h-7 w-7 flex justify-center items-center rounded-full hover:bg-gray-200 focus:transparent"
+          onClick={()=>handleDelete(row._id)}>
             <TrashIcon className="w-4 h-4" />
           </button>
         </div>

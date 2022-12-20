@@ -238,8 +238,8 @@ const GetAssets = () => {
         </div>
         <div className="flex items-center flex-col bg-[#FFFFFF] shadow rounded mt-4 pt-6 pb-10">
           <div className="w-full flex justify-between items-center px-6">
-            <span className="text-lg text-body font-semibold">Assets Table</span>
-              <div className="flex grow justify-end items-center px-20">
+            <span className="2xl:text-lg text-sm text-body font-semibold">Assets Table</span>
+              <div className="flex grow justify-end items-center 2xl:px-20 px-10">
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                   <div className="flex">
                     <div className="flex relative">
@@ -248,7 +248,7 @@ const GetAssets = () => {
                         type="text"
                         variant="search"
                         placeholder="Search"
-                        className="w-[250px]"
+                        className="2xl:w-[250px] xl:w-[200px] lg:w-[160px]"
                         dimension="small"
                       />
                       <label
@@ -259,14 +259,14 @@ const GetAssets = () => {
 
                     </div>
                       <Button
-                        className="h-[36px] w-13 rounded-none text-xs"
+                        className="h-[36px] rounded-none text-xs"
                       >
                         <SearchWhiteIcon className="w-3 h-3" />
                       </Button>
                   </div>
                 </form>
                 <Button
-                className="h-[36px] w-[160px] text-xs ml-5"
+                className="h-[36px] text-xs 2xl:ml-5 ml-2"
                 variant="outline"
                 >
                   EXPORT CSV

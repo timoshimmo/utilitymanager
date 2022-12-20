@@ -31,7 +31,7 @@ const GetManagers = () => {
 
   const history = useHistory();
   const [managers, setManagers] = useState([]);
-  
+
 
   useEffect(() => {
     retrieveManagers();
@@ -75,7 +75,7 @@ const GetManagers = () => {
       <div className="w-full h-full py-10 px-8">
         <div className="flex items-center flex-col bg-[#FFFFFF] shadow rounded pt-6 pb-10">
           <div className="w-full flex justify-between items-center px-6">
-            <span className="text-lg text-body font-semibold">Managers Table</span>
+            <span className="2xl:text-lg text-sm text-body font-semibold">Managers Table</span>
               <div className="flex grow justify-end items-center px-20">
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                   <div className="flex">
@@ -85,7 +85,7 @@ const GetManagers = () => {
                         type="text"
                         variant="search"
                         placeholder="Search"
-                        className="w-[250px]"
+                        className="2xl:w-[250px] xl:w-[200px] lg:w-[160px]"
                         dimension="small"
                       />
                       <label
@@ -103,7 +103,7 @@ const GetManagers = () => {
                   </div>
                 </form>
                 <Button
-                className="h-[36px] w-[160px] text-xs ml-5"
+                className="h-[36px] w-[160px] text-xs 2xl:ml-5 ml-2"
                 variant="outline"
                 >
                   EXPORT CSV

@@ -3,6 +3,7 @@ import { MODAL_VIEWS, useModalAction, useModalState } from "./modal.context";
 import UpdateStatusView from "../../messages/update-status-view";
 import UpdateItemRequestView from "../../inventory/update-request-view";
 import AddEquipmentForm from "../forms/add-equipment-form";
+import DeleteView from "../../common/delete-view";
 
 function renderModal(view: MODAL_VIEWS | undefined, data: any) {
   switch (view) {
@@ -12,6 +13,8 @@ function renderModal(view: MODAL_VIEWS | undefined, data: any) {
       return <AddEquipmentForm />;
     case "CONFIRM_ITEM_REQUEST":
       return <UpdateItemRequestView />;
+    case "DELETE_VIEW":
+      return <DeleteView />;
     default:
       return null;
   }

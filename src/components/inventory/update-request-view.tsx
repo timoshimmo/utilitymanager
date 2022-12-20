@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UpdateRequestCard from "../ui/cards/confirmation-card";
+import UpdateRequestCard from "../ui/cards/update-request-card";
 import {
   useModalAction,
   useModalState,
@@ -12,46 +12,24 @@ const UpdateItemRequestView = () => {
   const { closeModal } = useModalAction();
   const { data } = useModalState();
 
-  //let mTitle = '';
-  let desc = '';
 
-  if(data.status === 0) {
-    desc = "Approve item availability?";
-  }
-  else {
-    desc = "Disapprove item availability?";
-  }
+  async function handleConfirm(status: number) {
 
-
-
-  async function handleUpdate() {
     if(!loading) {
 
       setLoading(true);
 
-    /*  const obj = {
-        ticketId: data.id
-      };*/
+      const obj = {
+        itemId: data.id,
+        status: status
+      };
 
-      console.log("POPUP REQ ID: ", data.id);
-      console.log("POPUP REQ STATUS: ", data.status);
-
-      setLoading(false);
-      closeModal();
-      if (data.status === 0) {
-        toast.success("Request has been approved!");
-      }
-      else {
-        toast.success("Request has been disapproved!");
-      }
-
-
-    /*  SERVICES.put(`tickets/update`, obj)
+      SERVICES.put(`item-request//update/status`, obj)
       .then(response => {
           const res = response.data;
           setLoading(false);
           closeModal();
-          toast.success("Ticket status succesfully updated");
+          toast.success("Request has been approved!");
       })
       .catch(error => {
           setLoading(false);
@@ -62,20 +40,51 @@ const UpdateItemRequestView = () => {
           console.log(error.response.status);
           console.log(error.response.data.error);
       });
-      */
-
     }
+  }
 
+/*  async function handleDelete() {
+
+    if(!loading) {
+
+      setLoading(true);
+
+      const obj = {
+        itemId: data.id,
+        status: 2
+      };
+
+      SERVICES.post(`item-request//update/status`, obj)
+      .then(response => {
+          const res = response.data;
+          setLoading(false);
+          closeModal();
+          toast.success("Request has been approved!");
+      })
+      .catch(error => {
+          setLoading(false);
+          const resError = error.response ? error.response.data.message : "Something went wrong, please try again";
+          closeModal();
+          toast.error("Something went wrong, please try again");
+          console.log(resError);
+          console.log(error.response.status);
+          console.log(error.response.data.error);
+      });
+    }
 
   }
 
+  */
+
   return (
     <UpdateRequestCard
-      onCancel={closeModal}
-      onConfirm={handleUpdate}
+      onCancel={()=>handleConfirm(2)}
+      onClose={closeModal}
+      onConfirm={()=>handleConfirm(1)}
       confirmBtnText="Yes"
+      cancelBtnText="Not Available"
       title="Item Request Status"
-      description={desc}
+      description="Is this item available?"
       confirmBtnLoading={loading}
     />
   );

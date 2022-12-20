@@ -3,6 +3,8 @@ import { MenuDotsIcon } from '../../components/icons/menu-dots';
 import {
   AssetType,
 } from "../../ts-types/generated";
+import { useHistory } from 'react-router-dom';
+import { ROUTES } from '../../lib/route-links';
 
 export type IProps = {
   assets?: any;
@@ -11,6 +13,12 @@ export type IProps = {
 
 
 const AssetsTable = ({ assets, loading }: IProps) => {
+
+  const history = useHistory();
+
+  const navDetails = (row: any) => {
+      history.push(ROUTES.ASSET_DETAILS, { state: row });
+  }
 
   const customStyles = {
     rows: {
@@ -48,9 +56,9 @@ const AssetsTable = ({ assets, loading }: IProps) => {
       selector: row => row.description,
     },
     {
-      name: "LOCATION",
-      id: "location",
-      selector: row => row.location,
+      name: "BRAND",
+      id: "brand",
+      selector: row => row.brand,
     },
     {
       name: "VALUE",
@@ -63,11 +71,20 @@ const AssetsTable = ({ assets, loading }: IProps) => {
       id: "status",
       selector: row => row.status,
       cell: (row) => {
-          if (row?.status > 0) {
-            return <span className="whitespace-nowrap text-[#27B235]">Active</span>
+          if (row?.status === 0) {
+            return <span className="whitespace-nowrap text-[#27B235]">Very Good</span>
+          }
+          else if (row?.status === 1){
+            return <span className="whitespace-nowrap text-[#27B235]">Good</span>
+          }
+          else if (row?.status === 2){
+            return <span className="whitespace-nowrap text-[#FFA500]">Operational</span>
+          }
+          else if (row?.status === 3){
+            return <span className="whitespace-nowrap text-[#EA0E0E]">Poor</span>
           }
           else{
-            return <span className="whitespace-nowrap text-[#EA0E0E]">In-Active</span>
+            return <span className="whitespace-nowrap text-[#EA0E0E]">Damaged</span>
           }
       },
     },
@@ -92,7 +109,10 @@ const AssetsTable = ({ assets, loading }: IProps) => {
         defaultSortFieldId={1}
         progressPending={loading}
         pagination
+        highlightOnHover
+		    pointerOnHover
         customStyles={customStyles}
+        onRowClicked={navDetails}
       />
 
 );

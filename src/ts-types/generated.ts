@@ -30,8 +30,8 @@ export declare type AssetType = {
   _id: string;
   type: string;
   description: string;
+  brand: string;
   status: any;
-  location: string;
   value: number;
   createdDate: any;
 };
@@ -97,4 +97,10 @@ export declare type ItemsRequestType = {
   requestQty: number;
   status: number;
   createdDate: any;
+};
+
+export declare type Attachment = {
+  thumbnail?: string;
+  original?: string;
+  id?: string;
 };

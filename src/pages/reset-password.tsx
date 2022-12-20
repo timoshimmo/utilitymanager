@@ -59,7 +59,7 @@ const ResetPassword = () => {
         };
 
         if(permissionCode !== "0") {
-          axios.post(`https://utilityapi.onrender.com/admins/reset/${token}`, obj)
+          axios.post(`https://utilityapi.vercel.app/admins/reset/${token}`, obj)
           .then(response => {
             const res = response.data;
             console.log(res);
@@ -74,7 +74,7 @@ const ResetPassword = () => {
           })
         }
         else {
-          axios.post(`https://utilityapi.onrender.com/users/reset/${token}`, obj)
+          axios.post(`https://utilityapi.vercel.app/users/reset/${token}`, obj)
           .then(response => {
             const res = response.data;
             console.log(res);

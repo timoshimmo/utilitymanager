@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import Alert from '../../components/ui/alert';
 import Card from "../../components/ui/cards/card";
 import Input from '../../components/ui/forms/input';
@@ -15,6 +15,7 @@ import AssetParentSelect from "../../components/ui/forms/asset-parent-select";
 import AssetStatusSelect from "../../components/ui/forms/asset-status-select";
 import CriticalRepairsSelect from "../../components/ui/forms/critical-repairs-select";
 import AdequatelySecuredSelect from "../../components/ui/forms/adequately-secured-select";
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 //import axios from 'axios';
 import SERVICES from '../../util/webservices';
 
@@ -70,37 +71,41 @@ const superadminSchema = yup.object().shape({
   attachment: yup.object()
 });
 
-const defaultValues = {
-  assetType: null,
-  assetParent: null,
-  description: "",
-  brand: "",
-  installationYear: "",
-  purchaseYear: "",
-  designLoad: "",
-  actualLoad: "",
-  status: null,
-  criticalRepairs: null,
-  secured: null,
-  location: "",
-  value: "",
-  attachment: null
-};
-
 
 const CreateAssets = () => {
 
+  let location = useLocation();
   const history = useHistory();
 
-  //let [serverError, setServerError] = useState<string | null>(null);
   const [statusLoading, setStatusLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [allParents, setAllParents] = useState([]);
 
+  const { state } = location.state as any;
+
   useEffect(() => {
     retrieveParents();
+
+    console.log("STATE: ", state);
  }, []);
+
+ const defaultValues = {
+   assetType: state.type,
+   assetParent: state.parent,
+   description: state.description,
+   brand: state.brand,
+   installationYear: state.installationYear,
+   purchaseYear: state.purchaseYear,
+   designLoad: state.designLoad,
+   actualLoad: state.actualLoad,
+   status: state.status,
+   criticalRepairs: state.criticalRepairs,
+   secured: state.secured,
+   location: "",
+   value: state.value,
+   attachment: state.image
+ };
 
   const {
     register,
@@ -113,6 +118,10 @@ const CreateAssets = () => {
     defaultValues,
     resolver: yupResolver(superadminSchema),
   });
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: "AIzaSyBP68mfPt4CblP3abb_n8f0ThEI8m-Rq3I"
+  })
 
   const retrieveParents = () => {
     SERVICES.get(`assets/parents`)
@@ -130,25 +139,16 @@ const CreateAssets = () => {
   const handleGoBack = () => {
       history.goBack();
   }
-
-
+//state?.location.latitude,
   function onSubmit({ assetType, assetParent, description, brand, installationYear,
     purchaseYear, designLoad, actualLoad, status, criticalRepairs, secured, location, value, attachment }: FormValues) {
-      /*setSuccessMsg("Success");
-      setErrorMsg("Error");
-      setStatusLoading(true);
-      console.log("Print: " + assetType + description + status + location + value);
-      console.log("STATUS: " + successMsg + errorMsg);*/
 
       const locationString = location.split(",");
 
       const coordinates = {
-        latitude: locationString[0].trim(),
-        longitude: locationString[1].trim()
+        latitude: locationString[0],
+        longitude: locationString[1]
       };
-
-      //console.log("COORDINATES: ", JSON.stringify(coordinates));
-      //console.log("IMAGE: ", JSON.stringify(attachment));
 
       let parent = null;
 
@@ -177,9 +177,6 @@ const CreateAssets = () => {
             value: value,
             image: attachment
           };
-
-          //console.log(JSON.stringify(obj));
-          //setStatusLoading(false);
 
           SERVICES.post(`assets/create`, obj)
           .then(response => {
@@ -212,7 +209,7 @@ const CreateAssets = () => {
         >
           <BackArrowIcon className="w-6 h-6" />
         </button>
-        <span className="text-body text-[28px] font-bold">Create Asset</span>
+        <span className="text-body text-[28px] font-bold">Asset Details</span>
       </div>
       <div className="mt-8 w-full px-4">
           <form onSubmit={handleSubmit(onSubmit, onInvalid)} noValidate>
@@ -351,7 +348,33 @@ const CreateAssets = () => {
                     placeholder="Latitude, Longitude"
                     error={errors.location?.message!}
                   />
+                  <div className="mb-5">
+                    {isLoaded &&
+                          <GoogleMap
+                          id='order-map'
+                          mapContainerStyle={{
+                            width: '100%',
+                            height: '300px'
+                          }}
+                          center={{
+                            lat: Number(state.location.latitude),
+                            lng: Number(state.location.longitude)
+                          }}
+                          zoom={15}
+                          onLoad={map => {
+                            console.log('DirectionsRenderer onLoad map: ', map)
+                          }}
+                          onUnmount={map => {
+                            console.log('DirectionsRenderer onUnmount map: ', map)
+                          }}
+                          >
+                            <Marker
+                               position={{lat:Number(state.location.latitude), lng:Number(state.location.longitude)}}
+                             />
 
+                          </GoogleMap>
+                        }
+                    </div>
                   <Input
                     label="Value"
                     {...register('value')}

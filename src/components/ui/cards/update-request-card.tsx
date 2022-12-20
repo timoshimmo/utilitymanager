@@ -1,9 +1,11 @@
-import TrashIcon from "../../icons/trash-icon";
+import { CheckIcon } from "../../icons/check-icon";
+import { CloseIcon } from "../../icons/close-icon";
 import Button from "../button";
 import cn from "classnames";
 
 type UpdateRequestCardProps = {
   onCancel: () => void;
+  onClose: () => void;
   onConfirm: () => void;
   title?: string;
   icon?: any;
@@ -18,6 +20,7 @@ type UpdateRequestCardProps = {
 
 const UpdateRequestCard: React.FC<UpdateRequestCardProps> = ({
   onCancel,
+  onClose,
   onConfirm,
   icon,
   title = "Confirm",
@@ -32,12 +35,18 @@ const UpdateRequestCard: React.FC<UpdateRequestCardProps> = ({
 
   return (
     <div className="p-4 pb-6 bg-light m-auto max-w-sm w-full rounded-md md:rounded-xl sm:w-[24rem]">
+      <div className="w-full flex justify-end">
+        <button className="relative h-7 w-7 flex justify-center items-center rounded-full hover:bg-gray-200 focus:transparent"
+        onClick={onClose}>
+          <CloseIcon className="w-4 h-4" />
+        </button>
+      </div>
       <div className="w-full h-full text-center">
         <div className="flex h-full flex-col justify-between">
           {icon ? (
             icon
           ) : (
-            <TrashIcon className="mt-4 w-12 h-12 m-auto text-accent" />
+            <CheckIcon className="mt-4 w-12 h-12 m-auto text-accent" />
           )}
           <p className="text-heading text-xl font-bold mt-4">{title}</p>
           <p className="text-body-dark dark:text-muted leading-relaxed py-2 px-6">

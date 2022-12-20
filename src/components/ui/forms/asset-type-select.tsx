@@ -10,9 +10,16 @@ interface Props {
 }
 
 const data = [
+  { value: 'Substation', label: 'Substation' },
   { value: 'Feeder', label: 'Feeder' },
-  { value: 'Transformer', label: 'Transformer' },
-  { value: 'Meter', label: 'Meter' },
+  { value: 'Current Transformer', label: 'Current Transformer' },
+  { value: 'Distribution Transformer', label: 'Distribution Transformer' },
+  { value: 'Voltage Transformer', label: 'Voltage Transformer' },
+  { value: 'Switch Gear', label: 'Switch Gear' },
+  { value: 'Control Panel', label: 'Control Panel' },
+  { value: 'Auto Reclosers', label: 'Auto Reclosers' },
+  { value: 'Breaker', label: 'Breaker' },
+  { value: 'Lines', label: 'Lines' },
   { value: 'Pole', label: 'Pole' },
 ];
 
